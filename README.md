@@ -95,8 +95,8 @@ A detailed description of the methodology, evaluation metrics, challenges, and r
 
 Developed by:
 
-- Name 1 (email)
-- Name 2 (email)
+- Tiago Pedro (tiagopedrosoares02@gmail.com)
+- Tomás Silva (tomasestrociosilva@gmail.com )
 - Name 3 (email)
 
 ---
