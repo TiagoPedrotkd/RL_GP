@@ -97,7 +97,7 @@ Developed by:
 
 - Tiago Pedro (tiagopedrosoares02@gmail.com)
 - Tomás Silva (tomasestrociosilva@gmail.com )
-- Name 3 (email)
+- Cadmo Diogo (cadmaya@hotmail.com)
 
 ---
 
