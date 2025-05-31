@@ -7,13 +7,14 @@ from collections import defaultdict
 
 
 class QLearningAgent:
-    def __init__(self, actions, alpha=0.1, gamma=1.0, epsilon=0.1, seed=None):
+    def __init__(self, actions, alpha=0.1, gamma=1.0, epsilon=0.1, policy=None, seed=None):
         """
         Initialize agent.
         actions: list of possible actions.
         alpha: learning rate.
         gamma: discount factor.
         epsilon: exploration rate.
+        policy: policy selection method ("epsilon", "greedy", "softmax", "decay").
         seed: random seed.
         """
 
@@ -21,14 +22,18 @@ class QLearningAgent:
         self.alpha = alpha
         self.gamma = gamma
         self.epsilon = epsilon
+        self.policy_method = policy or "epsilon"
         self.Q = defaultdict(lambda: np.zeros(len(actions)))
         self.rng = np.random.default_rng(seed)
 
-    def policy(self, state, method="epsilon", **kwargs):
+    def policy(self, state, method=None, **kwargs):
         """
         Select action using specified policy.
         method: "epsilon", "greedy", "softmax", or "decay".
+        If method is None, uses self.policy_method.
         """
+
+        method = method or self.policy_method
 
         if method == "greedy":
             return self.policy_greedy(state)
@@ -87,4 +92,4 @@ class QLearningAgent:
 
     def __repr__(self):
         return (f"QLearningAgent(actions={self.actions}, alpha={self.alpha}, "
-                f"gamma={self.gamma}, epsilon={self.epsilon})")
+                f"gamma={self.gamma}, epsilon={self.epsilon}, policy={self.policy_method})")
