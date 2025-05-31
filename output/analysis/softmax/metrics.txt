@@ -1,0 +1,8 @@
+Retorno médio (primeiro seed): -0.2409
+Vitórias: 17532
+Derrotas: 29575
+Empates: 2893
+Parâmetros: {'alpha': 0.1, 'gamma': 1.0, 'epsilon': 0.05, 'policy': 'softmax'}
+Retornos de todos os seeds: [np.float64(-0.24086), np.float64(-0.23752), np.float64(-0.23012), np.float64(-0.23086), np.float64(-0.22858)]
+Média dos seeds: -0.2336
+Desvio padrão dos seeds: 0.0048

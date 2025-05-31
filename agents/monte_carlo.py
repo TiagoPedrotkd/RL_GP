@@ -8,28 +8,34 @@ import csv
 from collections import defaultdict
 
 class MonteCarloAgent:
-    def __init__(self, actions, epsilon=0.1, gamma=1.0, seed=None):
+    def __init__(self, actions, epsilon=0.1, gamma=1.0, policy="epsilon", seed=None):
         """
         Initialize agent.
         actions: list of possible actions.
         epsilon: exploration rate.
         gamma: discount factor.
+        policy: action selection method ("epsilon", "greedy", "softmax", "decay").
         seed: random seed.
         """
 
         self.actions = actions
         self.epsilon = epsilon
         self.gamma = gamma
+        self.policy_method = policy
         self.Q = defaultdict(lambda: np.zeros(len(actions)))
         self.returns = defaultdict(lambda: [[] for _ in actions])
         self.episode_returns = []
         self.rng = np.random.default_rng(seed)
 
-    def policy(self, state, method="epsilon", **kwargs):
+    def policy(self, state, method=None, **kwargs):
         """
         Select action using specified policy.
         method: "epsilon", "greedy", "softmax", or "decay".
+        If method is None, uses self.policy_method.
         """
+
+        if method is None:
+            method = self.policy_method
 
         if method == "greedy":
             return self.policy_greedy(state)
