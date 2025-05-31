@@ -6,14 +6,20 @@ import os
 OUTPUT_ANALYSIS_DIR = "output/analysis"
 LOG_SAVED_MSG = "Log salvo em: %s"
 
+MONTECARLO_LOG_FILENAME = "train_blackjack_montecarlo.log"
+SARSA_LOG_FILENAME = "train_blackjack_sarsa.log"
+QLEARNING_LOG_FILENAME = "train_blackjack_qlearning.log"
+
 def main():
-    montecarlo_log = os.path.join("logs", "train_blackjack_montecarlo.log")
-    sarsa_log = os.path.join("logs", "train_blackjack_sarsa.log")
-    qlearning_log = os.path.join("logs", "train_blackjack_qlearning.log")
+    montecarlo_log = os.path.join("logs", MONTECARLO_LOG_FILENAME)
+    sarsa_log = os.path.join("logs", SARSA_LOG_FILENAME)
+    qlearning_log = os.path.join("logs", QLEARNING_LOG_FILENAME)
 
     # Monte Carlo
-    RLTrainingUtils.setup_logger(log_name="train_blackjack_montecarlo.log")
-    logging.getLogger().handlers = [h for h in logging.getLogger().handlers if isinstance(h, logging.FileHandler) and h.baseFilename.endswith("train_blackjack_montecarlo.log")]  # Ensure only this log
+    RLTrainingUtils.setup_logger(log_name=MONTECARLO_LOG_FILENAME)
+    for handler in logging.getLogger().handlers[:]:
+        if isinstance(handler, logging.FileHandler) and not handler.baseFilename.endswith(MONTECARLO_LOG_FILENAME):
+            logging.getLogger().removeHandler(handler)
     logging.info("Início do treino Blackjack RL - MonteCarlo")
     try:
         RLTrainingUtils.run_experiment(
@@ -30,8 +36,10 @@ def main():
     logging.info(LOG_SAVED_MSG, montecarlo_log)
 
     # SARSA
-    RLTrainingUtils.setup_logger(log_name="train_blackjack_sarsa.log")
-    logging.getLogger().handlers = [h for h in logging.getLogger().handlers if isinstance(h, logging.FileHandler) and h.baseFilename.endswith("train_blackjack_sarsa.log")]
+    RLTrainingUtils.setup_logger(log_name=SARSA_LOG_FILENAME)
+    for handler in logging.getLogger().handlers[:]:
+        if isinstance(handler, logging.FileHandler) and not handler.baseFilename.endswith(SARSA_LOG_FILENAME):
+            logging.getLogger().removeHandler(handler)
     logging.info("Início do treino Blackjack RL - SARSA")
     try:
         RLTrainingUtils.run_experiment(
@@ -45,10 +53,13 @@ def main():
     except Exception as e:
         print(f"\n[ERRO] Execução interrompida (SARSA): {e}")
     print(f"\nLog SARSA salvo em: {sarsa_log}")
+    logging.info(LOG_SAVED_MSG, sarsa_log)
 
     # Q-Learning
-    RLTrainingUtils.setup_logger(log_name="train_blackjack_qlearning.log")
-    logging.getLogger().handlers = [h for h in logging.getLogger().handlers if isinstance(h, logging.FileHandler) and h.baseFilename.endswith("train_blackjack_qlearning.log")]
+    RLTrainingUtils.setup_logger(log_name=QLEARNING_LOG_FILENAME)
+    for handler in logging.getLogger().handlers[:]:
+        if isinstance(handler, logging.FileHandler) and not handler.baseFilename.endswith(QLEARNING_LOG_FILENAME):
+            logging.getLogger().removeHandler(handler)
     logging.info("Início do treino Blackjack RL - QLearning")
     try:
         RLTrainingUtils.run_experiment(
