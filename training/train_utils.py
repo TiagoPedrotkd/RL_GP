@@ -377,16 +377,17 @@ class RLTrainingUtils:
         if episode_returns is None and hasattr(agent, "episode_returns"):
             episode_returns = agent.episode_returns
         if episode_returns:
-            fig, ax = plt.subplots(figsize=(10, 5))
+            # Learning curve with moving average
+            fig, ax = plt.subplots(figsize=(12, 6))
             if len(episode_returns) >= window:
                 moving_avg = np.convolve(episode_returns, np.ones(window) / window, mode='valid')
-                ax.plot(moving_avg, label=f"{window}-episode moving average")
-            ax.plot(episode_returns, alpha=0.3, label="Episode returns")
-            ax.set_title(RLTrainingUtils.LEARNING_CURVE_TITLE)
-            ax.set_xlabel("Episode")
-            ax.set_ylabel("Return")
-            ax.legend()
-            ax.grid(True)
+                ax.plot(moving_avg, label=f"{window}-episode moving average", color="royalblue", linewidth=2)
+            ax.plot(episode_returns, alpha=0.3, label="Episode returns", color="gray")
+            ax.set_title("Learning Curve", fontsize=16)
+            ax.set_xlabel("Episode", fontsize=14)
+            ax.set_ylabel("Return", fontsize=14)
+            ax.legend(fontsize=12)
+            ax.grid(True, linestyle='--', alpha=0.6)
             plt.tight_layout()
             buf = io.BytesIO()
             plt.savefig(buf, format="png")
@@ -397,26 +398,27 @@ class RLTrainingUtils:
             with open(os.path.join(save_dir, "learning_curve.html"), "w", encoding="utf-8") as f:
                 f.write(html_curve)
 
-            plt.figure(figsize=(8, 4))
-            plt.hist(episode_returns, bins=50, color='skyblue', edgecolor='black')
-            plt.title("Distribuição dos Retornos por Episódio")
-            plt.xlabel("Retorno")
-            plt.ylabel("Frequência")
-            plt.grid(True)
+            # Histogram of returns
+            plt.figure(figsize=(10, 5))
+            plt.hist(episode_returns, bins=50, color='#4F81BD', edgecolor='black', alpha=0.85)
+            plt.title("Distribution of Episode Returns", fontsize=16)
+            plt.xlabel("Return", fontsize=14)
+            plt.ylabel("Frequency", fontsize=14)
+            plt.grid(True, linestyle='--', alpha=0.6)
             plt.tight_layout()
             plt.savefig(os.path.join(save_dir, "returns_histogram.png"))
             plt.close()
 
         if hasattr(agent, "Q"):
             from agents.utils import AgentVisualizer
-            html_qtable = AgentVisualizer.plot_q_table(agent, title="Q-table do agente treinado")
+            html_qtable = AgentVisualizer.plot_q_table(agent, title="Trained Agent Q-table")
             with open(os.path.join(save_dir, "qtable_heatmap.html"), "w", encoding="utf-8") as f:
                 f.write(html_qtable)
-            html_policy = AgentVisualizer.plot_policy(agent, title="Política aprendida")
+            html_policy = AgentVisualizer.plot_policy(agent, title="Learned Policy")
             with open(os.path.join(save_dir, "policy_barplot.html"), "w", encoding="utf-8") as f:
                 f.write(html_policy)
 
-        print(f"\nRelatórios e gráficos salvos em: {os.path.abspath(save_dir)}")
+        print(f"\nReports and plots saved at: {os.path.abspath(save_dir)}")
 
     @staticmethod
     def save_grid_search_results(
@@ -427,7 +429,7 @@ class RLTrainingUtils:
 
         os.makedirs(save_dir, exist_ok=True)
         if not results:
-            logging.warning("Nenhum resultado de grid search para salvar.")
+            logging.warning("No grid search results to save.")
             return
 
         df = pd.DataFrame([
@@ -447,22 +449,25 @@ class RLTrainingUtils:
         df_sorted.to_html(os.path.join(save_dir, "grid_search_results.html"), index=False)
         df_sorted.to_csv(os.path.join(save_dir, "grid_search_results.csv"), index=False)
 
-        plt.figure(figsize=(12, 6))
+        plt.figure(figsize=(14, 7))
         plt.bar(
             range(len(df_sorted)),
             df_sorted["mean_score"],
             yerr=df_sorted["std_score"],
-            color="royalblue",
-            capsize=4
+            color="#4F81BD",
+            capsize=4,
+            edgecolor='black'
         )
         plt.xticks(
             range(len(df_sorted)),
             [f"{row.policy}\nα={row.alpha}, γ={row.gamma}, ε={row.epsilon}" for row in df_sorted.itertuples()],
-            rotation=90
+            rotation=45,
+            ha='right'
         )
-        plt.ylabel("Score (média)")
-        plt.title("Comparação dos Scores do Grid Search (média ± std)")
+        plt.ylabel("Mean Score", fontsize=14)
+        plt.title("Grid Search Score Comparison (mean ± std)", fontsize=16)
         plt.tight_layout()
+        plt.grid(axis='y', linestyle='--', alpha=0.6)
         plt.savefig(os.path.join(save_dir, "grid_search_scores.png"))
         plt.close()
 
@@ -473,20 +478,43 @@ class RLTrainingUtils:
         window: int = 200,
         title: str = "Learning Curve"
     ) -> None:
-        plt.figure(figsize=(10, 5))
+        plt.figure(figsize=(12, 6))
         if len(returns) >= window:
             moving_avg = np.convolve(returns, np.ones(window) / window, mode='valid')
-            plt.plot(moving_avg, label=f"{window}-episode moving average")
-        plt.plot(returns, alpha=0.3, label="Episode returns")
-        plt.title(title if title else RLTrainingUtils.LEARNING_CURVE_TITLE)
-        plt.xlabel("Episode")
-        plt.ylabel("Return")
-        plt.legend()
-        plt.grid(True)
+            plt.plot(moving_avg, label=f"{window}-episode moving average", color="royalblue", linewidth=2)
+        plt.plot(returns, alpha=0.3, label="Episode returns", color="gray")
+        plt.title(title, fontsize=16)
+        plt.xlabel("Episode", fontsize=14)
+        plt.ylabel("Return", fontsize=14)
+        plt.legend(fontsize=12)
+        plt.grid(True, linestyle='--', alpha=0.6)
         plt.tight_layout()
         plt.savefig(save_path)
         plt.close()
 
+    @staticmethod
+    def plot_learning_curves_comparison(learning_curves: dict, save_path: str, window: int = 200):
+        import matplotlib.pyplot as plt
+        plt.figure(figsize=(14, 7))
+        # Sort policies for consistent color mapping
+        sorted_policies = sorted(learning_curves.keys())
+        colors = plt.cm.get_cmap('tab10', len(sorted_policies))
+        for idx, policy in enumerate(sorted_policies):
+            curve = learning_curves[policy]
+            plt.plot(
+                curve,
+                label=policy.capitalize(),
+                linewidth=2,
+                color=colors(idx)
+            )
+        plt.title(f"Learning Curves Comparison ({window}-episode moving average)", fontsize=18)
+        plt.xlabel("Episode", fontsize=15)
+        plt.ylabel("Return (moving average)", fontsize=15)
+        plt.legend(title="Policy", fontsize=13)
+        plt.grid(True, linestyle='--', alpha=0.6)
+        plt.tight_layout()
+        plt.savefig(save_path)
+        plt.close()
     @staticmethod
     def run_experiment(config_path, agent_type, policies, output_dir, label=None):
         from training.grid_search import grid_search
@@ -707,21 +735,6 @@ class RLTrainingUtils:
         """
         with open(os.path.join(save_dir, "metrics.html"), "w", encoding="utf-8") as f:
             f.write(html_metrics)
-
-    @staticmethod
-    def plot_learning_curves_comparison(learning_curves: dict, save_path: str, window: int = 200):
-        import matplotlib.pyplot as plt
-        plt.figure(figsize=(12, 6))
-        for policy, curve in learning_curves.items():
-            plt.plot(curve, label=policy)
-        plt.title(f"Comparação das Curvas de Aprendizagem ({window}-episódios média móvel)")
-        plt.xlabel("Episódio")
-        plt.ylabel("Retorno (média móvel)")
-        plt.legend(title="Política")
-        plt.grid(True)
-        plt.tight_layout()
-        plt.savefig(save_path)
-        plt.close()
 
     @staticmethod
     def run_training_multiple_seeds(
