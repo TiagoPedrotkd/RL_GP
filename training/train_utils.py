@@ -11,7 +11,8 @@ from agents.q_learning import QLearningAgent
 from agents.sarsa import SARSAAgent
 from agents.monte_carlo import MonteCarloAgent
 from agents.random_agent import RandomAgent
-from environments.blackjack_env import make_env
+from environments.blackjack_env import make_env as make_blackjack_env
+from environments.pendulum_env import make_pendulum_env
 
 @dataclass
 class ReportMetadata:
@@ -200,7 +201,13 @@ class RLTrainingUtils:
         save_best = config.get("save_best", True)
         verbose = config.get("verbose", True)
         RLTrainingUtils.set_global_seed(seed)
-        env = make_env(env_name=env_name, seed=seed)
+
+        # Ambiente genérico: seleciona o wrapper correto pelo nome
+        if "pendulum" in env_name.lower():
+            env = make_pendulum_env(seed=seed)
+        else:
+            env = make_blackjack_env(env_name=env_name, seed=seed)
+
         agent = RLTrainingUtils.create_agent(agent_type, actions, params, seed)
         agent_type_lower = agent_type.lower()
         os.makedirs(checkpoint_dir, exist_ok=True)
@@ -376,8 +383,8 @@ class RLTrainingUtils:
 
         if episode_returns is None and hasattr(agent, "episode_returns"):
             episode_returns = agent.episode_returns
-        if episode_returns:
-            # Learning curve with moving average
+
+        if episode_returns is not None and len(episode_returns) > 0:
             fig, ax = plt.subplots(figsize=(12, 6))
             if len(episode_returns) >= window:
                 moving_avg = np.convolve(episode_returns, np.ones(window) / window, mode='valid')
@@ -398,7 +405,6 @@ class RLTrainingUtils:
             with open(os.path.join(save_dir, "learning_curve.html"), "w", encoding="utf-8") as f:
                 f.write(html_curve)
 
-            # Histogram of returns
             plt.figure(figsize=(10, 5))
             plt.hist(episode_returns, bins=50, color='#4F81BD', edgecolor='black', alpha=0.85)
             plt.title("Distribution of Episode Returns", fontsize=16)

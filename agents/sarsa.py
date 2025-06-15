@@ -1,22 +1,15 @@
 """
-SARSA agent for on-policy temporal difference learning.
+SARSA agents: Discrete (Blackjack) e Discretized (Pendulum).
 """
 
 import numpy as np
 from collections import defaultdict
 
 class SARSAAgent:
+    """
+    SARSA agent para ambientes com espaço de ações e estados discretos (ex: Blackjack).
+    """
     def __init__(self, actions, alpha=0.1, gamma=1.0, epsilon=0.1, policy=None, seed=None):
-        """
-        Initialize agent.
-        actions: list of possible actions.
-        alpha: learning rate.
-        gamma: discount factor.
-        epsilon: exploration rate.
-        policy: policy selection method ("epsilon", "greedy", "softmax", "decay").
-        seed: random seed.
-        """
-
         self.actions = actions
         self.alpha = alpha
         self.gamma = gamma
@@ -91,3 +84,69 @@ class SARSAAgent:
     def __repr__(self):
         return (f"SARSAAgent(actions={self.actions}, alpha={self.alpha}, "
                 f"gamma={self.gamma}, epsilon={self.epsilon}, policy={self.policy_method})")
+
+class DiscretizedSARSAAgent:
+    """
+    SARSA agent para ambientes contínuos discretizados (ex: Pendulum).
+    Usa uma Q-table numpy para (angle_bin, vel_bin, action_idx).
+    """
+    def __init__(self, discretizer, alpha=0.1, gamma=0.99, epsilon=0.1, policy="epsilon", seed=None):
+        self.discretizer = discretizer
+        self.alpha = alpha
+        self.gamma = gamma
+        self.epsilon = epsilon
+        self.policy_method = policy
+        self.Q = self.discretizer.initialize_q_table()
+        self.rng = np.random.default_rng(seed)
+        self.actions = self.discretizer.actions
+
+    def policy(self, obs, method=None, **kwargs):
+        method = method or self.policy_method
+        discrete_state = self.discretizer.discretise_state(obs)
+        if method == "greedy":
+            return int(np.argmax(self.Q[discrete_state]))
+        elif method == "softmax":
+            temperature = kwargs.get("temperature", 1.0)
+            q = self.Q[discrete_state]
+            exp_q = np.exp((q - np.max(q)) / temperature)
+            probs = exp_q / np.sum(exp_q)
+            return int(self.rng.choice(len(self.actions), p=probs))
+        elif method == "decay":
+            episode = kwargs.get("episode", 0)
+            decay_rate = kwargs.get("decay_rate", 0.0001)
+            eps = max(0.01, self.epsilon * np.exp(-decay_rate * episode))
+            if self.rng.random() < eps:
+                return int(self.rng.integers(len(self.actions)))
+            return int(np.argmax(self.Q[discrete_state]))
+        if self.rng.random() < self.epsilon:
+            return int(self.rng.integers(len(self.actions)))
+        return int(np.argmax(self.Q[discrete_state]))
+
+    def update(self, obs, action_idx, reward, next_obs, next_action_idx):
+        state = self.discretizer.discretise_state(obs)
+        next_state = self.discretizer.discretise_state(next_obs)
+        target = reward + self.gamma * self.Q[next_state][next_action_idx]
+        self.Q[state][action_idx] += self.alpha * (target - self.Q[state][action_idx])
+
+    def get_policy(self):
+        policy = {}
+        for angle_bin in range(self.discretizer.angle_buckets):
+            for vel_bin in range(self.discretizer.vel_buckets):
+                state = (angle_bin, vel_bin)
+                policy[state] = int(np.argmax(self.Q[state]))
+        return policy
+
+    def save(self, path):
+        np.save(path, self.Q)
+
+    def load(self, path):
+        self.Q = np.load(path, allow_pickle=True)
+
+    def set_seed(self, seed):
+        self.rng = np.random.default_rng(seed)
+
+    def __repr__(self):
+        return (f"DiscretizedSARSAAgent(alpha={self.alpha}, gamma={self.gamma}, "
+                f"epsilon={self.epsilon}, policy={self.policy_method}, "
+                f"buckets=({self.discretizer.angle_buckets},{self.discretizer.vel_buckets}), "
+                f"n_actions={self.discretizer.n_actions})")
