@@ -2,10 +2,7 @@ env_name: Blackjack-v1
 seed: 123
 agent:
   type: SARSAAgent
-  alpha: 0.1
-  gamma: 1.0
-  epsilon: 0.05
-  decay_rate: 0.0005
+  policy: epsilon
 training:
   episodes: 50000
   max_steps_per_episode: 100
@@ -22,3 +19,9 @@ plot:
 export:
   policy_csv: ../results/sarsa_policy.csv
   q_table: ../results/sarsa_q_table.npy
+grid:
+  alpha: [0.05, 0.1]
+  gamma: [0.90, 0.95]
+  epsilon: [0.1]
+  policy: ["epsilon", "greedy", "softmax", "decay"]
+  episodes: [1000, 2000, 5000]

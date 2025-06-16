@@ -1,0 +1,19 @@
+env_name: Pendulum-v1
+seed: 42
+agent:
+  type: QLearningAgent
+  policy: epsilon
+training:
+  episodes: 3000
+  max_steps_per_episode: 200
+  early_stopping: false
+  early_stopping_patience: 1000
+  early_stopping_delta: 0.01
+  save_best: true
+  verbose: true
+grid:
+  alpha: [0.05, 0.1]
+  gamma: [0.90, 0.95]
+  epsilon: [0.1]
+  policy: ["epsilon", "greedy", "softmax", "decay"]
+  episodes: [1000, 2000, 5000]

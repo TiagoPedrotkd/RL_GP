@@ -2,77 +2,103 @@ import itertools
 import numpy as np
 from training.train_utils import RLTrainingUtils
 
-def grid_search(config, policies=None, n_seeds=3):
+class BlackjackGridSearch:
     """
-    Executa uma grid search sobre os hiperparâmetros definidos no config.
-    Para cada combinação, executa o treino com n_seeds diferentes e calcula média/desvio.
+    Classe utilitária para grid search de hiperparâmetros no ambiente Blackjack-v1.
+    Agora suporta múltiplos valores de 'episodes' no grid do YAML.
     """
-    grid = config.get("grid", None)
-    if grid:
-        param_grid = list(itertools.product(
-            grid.get("alpha", [0.1]),
-            grid.get("gamma", [1.0]),
-            grid.get("epsilon", [0.1])
-        ))
-    else:
-        param_grid = [(config["agent"].get("alpha", 0.1),
-                       config["agent"].get("gamma", 1.0),
-                       config["agent"].get("epsilon", 0.1))]
+    def __init__(self, config, n_seeds=3, verbose=True):
+        self.config = config
+        self.n_seeds = n_seeds
+        self.verbose = verbose
 
-    if policies is None:
-        policies = [config["agent"].get("policy", "epsilon")]
+    def run(self):
+        grid = self.config.get("grid", {})
+        agent_type = self.config["agent"]["type"]
+        actions = [0, 1]
+        # Suporte para episodes como lista no grid
+        if "episodes" in grid:
+            episodes_list = grid["episodes"]
+        else:
+            episodes_list = [self.config["training"]["episodes"]]
+        if "alpha" in grid or "alpha" in self.config["agent"]:
+            alpha_list = grid.get("alpha", [self.config["agent"].get("alpha", 0.1)])
+        else:
+            alpha_list = [None]
+        gamma_list = grid.get("gamma", [self.config["agent"].get("gamma", 1.0)])
+        epsilon_list = grid.get("epsilon", [self.config["agent"].get("epsilon", 0.1)])
+        if "policy" in grid:
+            policies = grid["policy"]
+        else:
+            policies = [self.config["agent"].get("policy", "epsilon")]
+        # Adiciona episodes ao grid search
+        param_grid = list(itertools.product(alpha_list, gamma_list, epsilon_list, policies, episodes_list))
 
-    best_score = float('-inf')
-    best_config = None
-    best_agent = None
-    results = []
+        best_score = float('-inf')
+        best_config = None
+        best_agent = None
+        results = []
 
-    checkpoint_interval = 0
+        print("\n========== Iniciando Grid Search Blackjack ==========")
+        for idx, (alpha, gamma, epsilon, policy, episodes) in enumerate(param_grid, 1):
+            params = {}
+            if alpha is not None:
+                params["alpha"] = alpha
+            params["gamma"] = gamma
+            params["epsilon"] = epsilon
+            params["policy"] = policy
 
-    print("\n========== Iniciando Grid Search ==========")
-    for idx, (alpha, gamma, epsilon) in enumerate(param_grid, 1):
-        for policy in policies:
-            params = {"alpha": alpha, "gamma": gamma, "epsilon": epsilon, "policy": policy}
-            msg = f"[{idx}/{len(param_grid)}] Parâmetros: {params}"
+            msg = f"[{idx}/{len(param_grid)}] Parâmetros: {params} | episodes: {episodes}"
             print(msg)
 
             import logging
             logging.info(msg)
 
-            seeds = [config.get("seed", 42) + i for i in range(n_seeds)]
-            mean_returns, agents, _ = RLTrainingUtils.run_training_multiple_seeds(
-                agent_type=config["agent"]["type"],
-                actions=[0, 1],
-                params=params,
-                episodes=config["training"]["episodes"],
-                seeds=seeds,
-                checkpoint_dir=f"output/checkpoints/{policy}/alpha{alpha}_gamma{gamma}_epsilon{epsilon}",
-                checkpoint_interval=checkpoint_interval
-            )
-            mean_score = float(np.mean(mean_returns))
-            std_score = float(np.std(mean_returns))
-            results.append((params, mean_score, std_score, mean_returns))
-            print(f"  → Média: {mean_score:.4f} | Std: {std_score:.4f} | Seeds: {mean_returns}")
-            logging.info(f"Média: {mean_score:.4f} | Std: {std_score:.4f} | Seeds: {mean_returns}")
+            scores = []
+            for seed in range(self.n_seeds):
+                local_config = dict(self.config)
+                local_config["seed"] = self.config.get("seed", 42) + seed
+                # Atualiza episodes no config para cada execução
+                if "training" not in local_config:
+                    local_config["training"] = {}
+                local_config["training"]["episodes"] = episodes
+                mean_return, agent, _ = RLTrainingUtils.run_training(
+                    agent_type=agent_type,
+                    actions=actions,
+                    params=params,
+                    config=local_config
+                )
+                scores.append(mean_return)
+                print(f"Seed {seed} | Params: {params} | Episodes: {episodes} | Mean Return: {mean_return:.3f}")
+
+            mean_score = float(np.mean(scores))
+            std_score = float(np.std(scores))
+
+            results.append((dict(params, episodes=episodes), mean_score, std_score, scores))
+            if self.verbose:
+                print(f"Params: {params} | Episodes: {episodes} | Média: {mean_score:.3f} | Std: {std_score:.3f}")
 
             if mean_score > best_score:
                 best_score = mean_score
-                best_config = params
-                best_agent = agents[np.argmax(mean_returns)]
+                best_config = dict(params, episodes=episodes)
+                best_agent = agent
                 best_path = "output/best_qtable.npy"
                 best_agent.save(best_path)
-                print(f"  * Novo melhor agente salvo em: {best_path}")
+                if self.verbose:
+                    print(f"  * Novo melhor agente salvo em: {best_path}")
                 logging.info(f"Novo melhor agente salvo em: {best_path}")
+            
 
-    print("\n========== Grid Search Finalizado ==========")
-    print(f"Melhor configuração: {best_config}")
-    print(f"Melhor score: {best_score:.4f}")
-    import logging
-    logging.info("\nMelhor configuração encontrada:")
-    logging.info(f"{best_config}")
-    logging.info(f"Score: {best_score:.4f}")
 
-    return results
+        print("\n========== Grid Search Blackjack Finalizado ==========")
+        print(f"Melhor configuração: {best_config}")
+        print(f"Melhor score médio das seeds: {best_score:.4f}")
+        import logging
+        logging.info("\nMelhor configuração encontrada:")
+        logging.info(f"{best_config}")
+        logging.info(f"Score: {best_score:.4f}")
+
+        return results
 
 class PendulumGridSearch:
     """

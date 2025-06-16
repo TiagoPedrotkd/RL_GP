@@ -44,6 +44,9 @@ class RLTrainingUtils:
     def setup_logger(log_dir: str = "logs", log_name: str = "train_blackjack.log") -> str:
         os.makedirs(log_dir, exist_ok=True)
         log_path = os.path.join(log_dir, log_name)
+        root_logger = logging.getLogger()
+        while root_logger.handlers:
+            root_logger.handlers.pop()
         logging.basicConfig(
             filename=log_path,
             level=logging.INFO,
@@ -151,10 +154,10 @@ class RLTrainingUtils:
         Garante o retorno sempre como (next_state, reward, done)
         """
         step_result = env.step(action)
-        if len(step_result) == 5:  # Gym >=0.26
+        if len(step_result) == 5:
             next_state, reward, terminated, truncated, _ = step_result
             done = terminated or truncated
-        elif len(step_result) == 4:  # Gym <=0.25
+        elif len(step_result) == 4:
             next_state, reward, done, _ = step_result
         else:
             raise ValueError(f"Formato inesperado no retorno do ambiente: {step_result}")
@@ -228,14 +231,13 @@ class RLTrainingUtils:
 
     @staticmethod
     def _run_limited_steps_episode(env, agent, agent_type_lower, max_steps, track_results, results_counter):
-        # Special handling for MonteCarloAgent: use its own episode logic
         if agent_type_lower == "montecarloagent":
             return RLTrainingUtils.run_monte_carlo_episode(
                 env, agent,
                 track_results=track_results,
                 results_counter=results_counter
             )
-        # TD agents (Q-Learning, SARSA)
+
         steps = 0
         done = False
         state_info = env.reset()
@@ -255,7 +257,6 @@ class RLTrainingUtils:
 
     @staticmethod
     def _update_agent(agent, agent_type_lower, state, action, reward, next_state, next_action, done):
-        # Only call for TD agents; MonteCarloAgent handled separately
         RLTrainingUtils._update_td_agent(agent, agent_type_lower, state, action, reward, next_state, next_action, done)
 
     @staticmethod
@@ -269,11 +270,12 @@ class RLTrainingUtils:
                 results_counter["draw"] += 1
             
     @staticmethod
-    def _maybe_checkpoint(agent, agent_type, ep, checkpoint_interval, checkpoint_dir, verbose):
+    def _maybe_checkpoint(agent, agent_type, ep, checkpoint_interval, checkpoint_dir, verbose = False):
         if checkpoint_interval and ep % checkpoint_interval == 0:
             checkpoint_path = os.path.join(checkpoint_dir, f"{agent_type}_ep{ep}.npy")
             agent.save(checkpoint_path)
-            logging.info(f"Checkpoint salvo: {checkpoint_path}")
+            if verbose:
+                logging.info(f"Checkpoint salvo: {checkpoint_path}")
 
     @staticmethod
     def _early_stopping_logic(returns, ep, early_stopping, early_stopping_patience, early_stopping_delta,
@@ -298,8 +300,9 @@ class RLTrainingUtils:
     
     @staticmethod
     def _log_progress(ep, episodes, returns, verbose, track_results, results_counter):
-        if verbose and ep % 1000 == 0:
-            logging.info(f"Episode {ep}/{episodes} | Mean Return (last 1000): {np.mean(returns[-1000:]):.3f}")
+
+        if verbose and ep == episodes:
+            logging.info(f"Seed finalizada | Episódios: {episodes} | Média final: {np.mean(returns):.3f}")
             if track_results:
                 logging.info(f"Vitórias: {results_counter['win']} | Derrotas: {results_counter['loss']} | Empates: {results_counter['draw']}")
 
@@ -308,19 +311,28 @@ class RLTrainingUtils:
         agent_type: str,
         actions: List[int],
         params: Dict[str, Any],
-        episodes: int = 10000,
-        seed: int = 42,
-        checkpoint_dir: str = "../results/checkpoints",
-        checkpoint_interval: int = 5000,
-        track_results: bool = False,
-        env_name: str = "Blackjack-v1",
-        max_steps_per_episode: int = 100,
-        early_stopping: bool = False,
-        early_stopping_patience: int = 1000,
-        early_stopping_delta: float = 0.01,
-        save_best: bool = True,
-        verbose: bool = True
+        config: Optional[Dict[str, Any]] = None
     ) -> Tuple[float, Any, Optional[Dict[str, int]]]:
+        """
+        Executa o treino de um agente RL com base em um dicionário de configuração.
+        Os parâmetros de treino devem estar em config['training'].
+        """
+        if config is None:
+            config = {}
+        training_cfg = config.get("training", {})
+        episodes = training_cfg.get("episodes", 10000)
+        seed = config.get("seed", 42)
+        checkpoint_dir = training_cfg.get("checkpoint_dir", "../results/checkpoints")
+        checkpoint_interval = training_cfg.get("checkpoint_interval", 5000)
+        track_results = training_cfg.get("track_results", False)
+        env_name = config.get("env_name", "Blackjack-v1")
+        max_steps_per_episode = training_cfg.get("max_steps_per_episode", 100)
+        early_stopping = training_cfg.get("early_stopping", False)
+        early_stopping_patience = training_cfg.get("early_stopping_patience", 1000)
+        early_stopping_delta = training_cfg.get("early_stopping_delta", 0.01)
+        save_best = training_cfg.get("save_best", True)
+        verbose = training_cfg.get("verbose", True)
+
         (env, agent, agent_type_lower, _, _, _, _, _, _, _, _, _, _) = RLTrainingUtils._setup_training(
             agent_type, actions, params, seed,
             {
@@ -347,7 +359,7 @@ class RLTrainingUtils:
                 ep_return = RLTrainingUtils._run_episode(env, agent, agent_type_lower, max_steps_per_episode, track_results, results_counter)
                 returns.append(ep_return)
                 RLTrainingUtils._log_progress(ep, episodes, returns, verbose, track_results, results_counter)
-                RLTrainingUtils._maybe_checkpoint(agent, agent_type, ep, checkpoint_interval, checkpoint_dir, verbose)
+                RLTrainingUtils._maybe_checkpoint(agent, agent_type, ep, checkpoint_interval, checkpoint_dir, verbose = False)
                 best_mean, patience_counter, stop = RLTrainingUtils._early_stopping_logic(
                     returns, ep, early_stopping, early_stopping_patience, early_stopping_delta,
                     best_mean, patience_counter, save_best, agent, agent_type, checkpoint_dir
@@ -536,6 +548,11 @@ class RLTrainingUtils:
         save_best = train_cfg.get("save_best", True)
         verbose = train_cfg.get("verbose", True)
         n_seeds = 5
+
+        grid_cfg = config.get("grid", None)
+        if policies is None and grid_cfg is not None and "policy" in grid_cfg:
+            policies = grid_cfg["policy"]
+
         results = grid_search(config, policies=policies, n_seeds=n_seeds)
         RLTrainingUtils.save_grid_search_results(results, save_dir=output_dir)
 
@@ -603,34 +620,37 @@ class RLTrainingUtils:
 
         print(f"\nTreinando e analisando para policy: {policy_name}")
 
+        config = {
+            "training": {
+                "episodes": training_cfg.episodes,
+                "checkpoint_dir": checkpoint_dir,
+                "checkpoint_interval": 0,
+                "track_results": True,
+                "max_steps_per_episode": training_cfg.max_steps_per_episode,
+                "early_stopping": training_cfg.early_stopping,
+                "early_stopping_patience": training_cfg.early_stopping_patience,
+                "early_stopping_delta": training_cfg.early_stopping_delta,
+                "save_best": training_cfg.save_best,
+                "verbose": training_cfg.verbose
+            },
+            "env_name": training_cfg.env_name,
+            "seed": training_cfg.seed
+        }
+
         mean_return, agent, results_counter = RLTrainingUtils.run_training(
             agent_type=training_cfg.agent_type,
             actions=[0, 1],
             params=params,
-            episodes=training_cfg.episodes,
-            seed=training_cfg.seed,
-            checkpoint_dir=checkpoint_dir,
-            checkpoint_interval=0,
-            track_results=True,
-            env_name=training_cfg.env_name,
-            max_steps_per_episode=training_cfg.max_steps_per_episode,
-            early_stopping=training_cfg.early_stopping,
-            early_stopping_patience=training_cfg.early_stopping_patience,
-            early_stopping_delta=training_cfg.early_stopping_delta,
-            save_best=training_cfg.save_best,
-            verbose=training_cfg.verbose
+            config=config
         )
 
         RLTrainingUtils._update_learning_curves(agent, policy_name, report_meta.window, report_meta.learning_curves)
         total_episodes = report_meta.config["training"]["episodes"]
-        win_rate = results_counter["win"] / total_episodes if total_episodes > 0 else 0.0
+        if total_episodes > 0:
+            win_rate = results_counter["win"] / total_episodes
+        else:
+            win_rate = 0.0
 
-        print(f"Retorno médio: {mean_return:.4f}")
-        print(f"Vitórias: {results_counter['win']} | Derrotas: {results_counter['loss']} | Empates: {results_counter['draw']} | Taxa de vitória: {win_rate:.4f}")
-
-        RLTrainingUtils.analyze_training(agent, save_dir=policy_dir, policy_name=None)
-
-        RLTrainingUtils._save_metrics_txt(policy_dir, mean_return, results_counter, win_rate, params, report_meta.seeds_scores, report_meta.mean_score, report_meta.std_score)
         RLTrainingUtils.save_policy_metrics_html(
             policy_name=policy_name,
             mean_return=mean_return,
@@ -647,17 +667,30 @@ class RLTrainingUtils:
     def train_and_report_random(config, output_dir, label, window, env_name, seed, learning_curves):
         print("\nTreinando e analisando baseline: RandomAgent")
         random_policy_dir = os.path.join(output_dir, f"{label}_random") if label else os.path.join(output_dir, "random")
+
+        config_random = {
+            "training": {
+                "episodes": config["training"]["episodes"],
+                "checkpoint_dir": os.path.join("output", "checkpoints", f"{label}_random") if label else os.path.join("output", "checkpoints", "random"),
+                "checkpoint_interval": 0,
+                "track_results": True,
+                "max_steps_per_episode": config["training"].get("max_steps_per_episode", 100),
+                "early_stopping": config["training"].get("early_stopping", False),
+                "early_stopping_patience": config["training"].get("early_stopping_patience", 1000),
+                "early_stopping_delta": config["training"].get("early_stopping_delta", 0.01),
+                "save_best": config["training"].get("save_best", True),
+                "verbose": config["training"].get("verbose", True)
+            },
+            "env_name": env_name,
+            "seed": seed
+        }
         mean_return, agent, results_counter = RLTrainingUtils.run_training(
             agent_type="RandomAgent",
             actions=[0, 1],
             params={},
-            episodes=config["training"]["episodes"],
-            seed=seed,
-            checkpoint_dir=os.path.join("output", "checkpoints", f"{label}_random") if label else os.path.join("output", "checkpoints", "random"),
-            checkpoint_interval=0,
-            track_results=True,
-            env_name=env_name
+            config=config_random
         )
+
         total_episodes = config["training"]["episodes"]
         win_rate = results_counter["win"] / total_episodes if total_episodes > 0 else 0.0
 
@@ -759,22 +792,17 @@ class RLTrainingUtils:
         results_counters = []
         for seed in seeds:
             local_config = dict(config) if config else {}
+            local_config["seed"] = seed
+
+            if "training" not in local_config:
+                local_config["training"] = {}
+            local_config["training"]["episodes"] = episodes
+            local_config["env_name"] = env_name
             mean_return, agent, results_counter = RLTrainingUtils.run_training(
                 agent_type=agent_type,
                 actions=actions,
                 params=params,
-                episodes=episodes,
-                seed=seed,
-                checkpoint_dir=os.path.join(checkpoint_dir, f"seed_{seed}"),
-                checkpoint_interval=checkpoint_interval,
-                track_results=local_config.get("track_results", False),
-                env_name=local_config.get("env_name", env_name),
-                max_steps_per_episode=local_config.get("max_steps_per_episode", 100),
-                early_stopping=local_config.get("early_stopping", False),
-                early_stopping_patience=local_config.get("early_stopping_patience", 1000),
-                early_stopping_delta=local_config.get("early_stopping_delta", 0.01),
-                save_best=local_config.get("save_best", True),
-                verbose=local_config.get("verbose", True)
+                config=local_config
             )
             mean_returns.append(mean_return)
             agents.append(agent)
