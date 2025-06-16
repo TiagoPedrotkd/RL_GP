@@ -1,9 +1,0 @@
-Retorno médio (primeiro seed): -0.3910
-Vitórias: 14225
-Derrotas: 33773
-Empates: 2002
-Taxa de vitória: 0.2845
-Parâmetros: RandomAgent
-Retornos de todos os seeds: []
-Média dos seeds: -0.3910
-Desvio padrão dos seeds: 0.0000

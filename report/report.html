@@ -1,13 +1,13 @@
 <!--
-Relatório Comparativo de Agentes e Políticas - Blackjack RL
-Este ficheiro é gerado automaticamente.
+Comparative Report of Agents and Policies - Blackjack RL
+This file is generated automatically.
 -->
 
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Relatório Comparativo de Agentes e Políticas - Blackjack RL</title>
+    <title>Comparative Report of Agents and Policies - Blackjack RL</title>
     <style>
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
@@ -135,325 +135,272 @@ Este ficheiro é gerado automaticamente.
 </head>
 <body>
 <div class="container">
-    <h1>Relatório Comparativo de Agentes e Políticas - Blackjack RL</h1>
+    <h1>Comparative Report of Agents and Policies - Blackjack RL</h1>
     <div class="nav">
-        <a href="#comparativo">Comparativo Geral</a>
+        <a href="#comparative">General Comparison</a>
         <a href="#montecarlo">Monte Carlo</a>
         <a href="#sarsa">SARSA</a>
         <a href="#qlearning">Q-Learning</a>
         <a href="#random">Random (baseline)</a>
     </div>
-    <p>Este relatório apresenta os resultados dos agentes <b>Monte Carlo</b>, <b>SARSA</b>, <b>Q-Learning</b> e <b>Random</b>, para diferentes políticas de exploração. Inclui métricas, gráficos, tabelas Q e links para análise detalhada.</p>
+    <p>This report presents the results of the <b>Monte Carlo</b>, <b>SARSA</b>, <b>Q-Learning</b>, and <b>Random</b> agents for different exploration policies. It includes metrics, plots, Q-tables, and links for detailed analysis.</p>
 
-    <!-- Comparativo geral -->
-    <div class="section" id="comparativo">
-        <h2>Comparativo Geral das Políticas</h2>
+    <!-- General comparison -->
+    <div class="section" id="comparative">
+        <h2>General Policy Comparison</h2>
         <div class="legend">
-            <b>Curvas de aprendizagem (média móvel):</b> Permite comparar o desempenho de cada política ao longo do treino.<br>
-            <b>Nota:</b> Clique nos links das políticas para ver detalhes, tabelas Q e histogramas.
+            <b>Learning curves (moving average):</b> Allows comparing the performance of each policy throughout training.<br>
+            <b>Note:</b> Click on the policy links to see details, Q-tables, and histograms.
         </div>
-        <img src="../output/analysis/montecarlo/learning_curves_comparison.png" class="comparison-img" alt="Comparação Monte Carlo">
-        <img src="../output/analysis/sarsa/learning_curves_comparison.png" class="comparison-img" alt="Comparação SARSA">
-        <img src="../output/analysis/qlearning/learning_curves_comparison.png" class="comparison-img" alt="Comparação Q-Learning">
+        <img src="../output/analysis/montecarlo/learning_curves_comparison.png" class="comparison-img" alt="Monte Carlo Comparison">
+        <img src="../output/analysis/sarsa/learning_curves_comparison.png" class="comparison-img" alt="SARSA Comparison">
+        <img src="../output/analysis/qlearning/learning_curves_comparison.png" class="comparison-img" alt="Q-Learning Comparison">
     </div>
 
-    <!-- Tabela de políticas para cada agente -->
     <div class="section agent-block" id="montecarlo">
         <h2>Monte Carlo</h2>
         <table class="policy-table">
             <tr>
-                <th>Política</th>
-                <th>Curva de aprendizagem</th>
-                <th>Histograma de retornos</th>
+                <th>Policy</th>
+                <th>Learning curve</th>
+                <th>Returns histogram</th>
                 <th>Q-table</th>
-                <th>Política aprendida</th>
-                <th>Métricas</th>
+                <th>Learned policy</th>
             </tr>
-            <!-- Repita para cada política -->
+
             <tr>
                 <td>Epsilon</td>
                 <td>
-                    <a href="../output/analysis/montecarlo/montecarlo_epsilon/learning_curve.html" target="_blank">
-                        <img src="../output/analysis/montecarlo/montecarlo_epsilon/learning_curve.png" class="img-preview" alt="Curva de aprendizagem"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Curva não encontrada]</div>');">
+                    <a href="../output/analysis/montecarlo/epsilon/epsilon/learning_curve.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Curve (HTML)</button>
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/montecarlo/montecarlo_epsilon/returns_histogram.png" target="_blank">
-                        <img src="../output/analysis/montecarlo/montecarlo_epsilon/returns_histogram.png" class="img-preview" alt="Histograma de retornos"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Histograma não encontrado]</div>');">
+                    <a href="../output/analysis/montecarlo/epsilon/epsilon/returns_histogram.png" target="_blank">
+                        <img src="../output/analysis/montecarlo/epsilon/epsilon/returns_histogram.png" class="img-preview" alt="Returns histogram"
+                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Histogram not found]</div>');">
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/montecarlo/montecarlo_epsilon/qtable_heatmap.html" target="_blank">Q-table</a>
-                </td>
-                <td>
-                    <a href="../output/analysis/montecarlo/montecarlo_epsilon/policy_barplot.html" target="_blank">
-                        <img src="../output/analysis/montecarlo/montecarlo_epsilon/policy_barplot.png" class="img-preview" alt="Política aprendida"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Política não encontrada]</div>');">
+                    <a href="../output/analysis/montecarlo/epsilon/epsilon/qtable_heatmap.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Q-table (HTML)</button>
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/montecarlo/montecarlo_epsilon/metrics.html" target="_blank">Métricas</a>
+                    <a href="../output/analysis/montecarlo/epsilon/epsilon/policy_barplot.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Policy (HTML)</button>
+                    </a>
                 </td>
-            </tr>
             <tr>
                 <td>Greedy</td>
                 <td>
-                    <a href="../output/analysis/montecarlo/montecarlo_greedy/learning_curve.html" target="_blank">
-                        <img src="../output/analysis/montecarlo/montecarlo_greedy/learning_curve.png" class="img-preview" alt="Curva de aprendizagem"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Curva não encontrada]</div>');">
+                    <a href="../output/analysis/montecarlo/greedy/greedy/learning_curve.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Curve (HTML)</button>
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/montecarlo/montecarlo_greedy/returns_histogram.png" target="_blank">
-                        <img src="../output/analysis/montecarlo/montecarlo_greedy/returns_histogram.png" class="img-preview" alt="Histograma de retornos"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Histograma não encontrado]</div>');">
+                    <a href="../output/analysis/montecarlo/greedy/greedy/returns_histogram.png" target="_blank">
+                        <img src="../output/analysis/montecarlo/greedy/greedy/returns_histogram.png" class="img-preview" alt="Returns histogram"
+                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Histogram not found]</div>');">
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/montecarlo/montecarlo_greedy/qtable_heatmap.html" target="_blank">Q-table</a>
-                </td>
-                <td>
-                    <a href="../output/analysis/montecarlo/montecarlo_greedy/policy_barplot.html" target="_blank">
-                        <img src="../output/analysis/montecarlo/montecarlo_greedy/policy_barplot.png" class="img-preview" alt="Política não encontrada"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Política não encontrada]</div>');">
+                    <a href="../output/analysis/montecarlo/greedy/greedy/qtable_heatmap.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Q-table (HTML)</button>
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/montecarlo/montecarlo_greedy/metrics.html" target="_blank">Métricas</a>
+                    <a href="../output/analysis/montecarlo/greedy/greedy/policy_barplot.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Policy (HTML)</button>
+                    </a>
                 </td>
-            </tr>
             <tr>
                 <td>Softmax</td>
                 <td>
-                    <a href="../output/analysis/montecarlo/montecarlo_softmax/learning_curve.html" target="_blank">
-                        <img src="../output/analysis/montecarlo/montecarlo_softmax/learning_curve.png" class="img-preview" alt="Curva de aprendizagem"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Curva não encontrada]</div>');">
+                    <a href="../output/analysis/montecarlo/softmax/softmax/learning_curve.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Curve (HTML)</button>
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/montecarlo/montecarlo_softmax/returns_histogram.png" target="_blank">
-                        <img src="../output/analysis/montecarlo/montecarlo_softmax/returns_histogram.png" class="img-preview" alt="Histograma de retornos"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Histograma não encontrado]</div>');">
+                    <a href="../output/analysis/montecarlo/softmax/softmax/returns_histogram.png" target="_blank">
+                        <img src="../output/analysis/montecarlo/softmax/softmax/returns_histogram.png" class="img-preview" alt="Returns histogram"
+                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Histogram not found]</div>');">
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/montecarlo/montecarlo_softmax/qtable_heatmap.html" target="_blank">Q-table</a>
-                </td>
-                <td>
-                    <a href="../output/analysis/montecarlo/montecarlo_softmax/policy_barplot.html" target="_blank">
-                        <img src="../output/analysis/montecarlo/montecarlo_softmax/policy_barplot.png" class="img-preview" alt="Política não encontrada"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Política não encontrada]</div>');">
+                    <a href="../output/analysis/montecarlo/softmax/softmax/qtable_heatmap.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Q-table (HTML)</button>
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/montecarlo/montecarlo_softmax/metrics.html" target="_blank">Métricas</a>
+                    <a href="../output/analysis/montecarlo/softmax/softmax/policy_barplot.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Policy (HTML)</button>
+                    </a>
                 </td>
             </tr>
             <tr>
                 <td>Decay</td>
                 <td>
-                    <a href="../output/analysis/montecarlo/montecarlo_decay/learning_curve.html" target="_blank">
-                        <img src="../output/analysis/montecarlo/montecarlo_decay/learning_curve.png" class="img-preview" alt="Curva de aprendizagem"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Curva não encontrada]</div>');">
+                    <a href="../output/analysis/montecarlo/decay/decay/learning_curve.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Curve (HTML)</button>
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/montecarlo/montecarlo_decay/returns_histogram.png" target="_blank">
-                        <img src="../output/analysis/montecarlo/montecarlo_decay/returns_histogram.png" class="img-preview" alt="Histograma de retornos"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Histograma não encontrado]</div>');">
+                    <a href="../output/analysis/montecarlo/decay/decay/returns_histogram.png" target="_blank">
+                        <img src="../output/analysis/montecarlo/decay/decay/returns_histogram.png" class="img-preview" alt="Returns histogram"
+                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Histogram not found]</div>');">
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/montecarlo/montecarlo_decay/qtable_heatmap.html" target="_blank">Q-table</a>
-                </td>
-                <td>
-                    <a href="../output/analysis/montecarlo/montecarlo_decay/policy_barplot.html" target="_blank">
-                        <img src="../output/analysis/montecarlo/montecarlo_decay/policy_barplot.png" class="img-preview" alt="Política não encontrada"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Política não encontrada]</div>');">
+                    <a href="../output/analysis/montecarlo/decay/decay/qtable_heatmap.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Q-table (HTML)</button>
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/montecarlo/montecarlo_decay/metrics.html" target="_blank">Métricas</a>
+                    <a href="../output/analysis/montecarlo/decay/decay/policy_barplot.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Policy (HTML)</button>
+                    </a>
                 </td>
             </tr>
             <tr>
                 <td>Random</td>
                 <td>
-                    <a href="../output/analysis/montecarlo/montecarlo_random/learning_curve.html" target="_blank">
-                        <img src="../output/analysis/montecarlo/montecarlo_random/learning_curve.png" class="img-preview" alt="Curva de aprendizagem"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Curva não encontrada]</div>');">
+                    <a href="../output/analysis/montecarlo/random/random/learning_curve.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Curve (HTML)</button>
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/montecarlo/montecarlo_random/returns_histogram.png" target="_blank">
-                        <img src="../output/analysis/montecarlo/montecarlo_random/returns_histogram.png" class="img-preview" alt="Histograma de retornos"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Histograma não encontrado]</div>');">
+                    <a href="../output/analysis/montecarlo/random/random/returns_histogram.png" target="_blank">
+                        <img src="../output/analysis/montecarlo/random/random/returns_histogram.png" class="img-preview" alt="Returns histogram"
+                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Histogram not found]</div>');">
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/montecarlo/montecarlo_random/qtable_heatmap.html" target="_blank">Q-table</a>
+                    
                 </td>
                 <td>
-                    <a href="../output/analysis/montecarlo/montecarlo_random/policy_barplot.html" target="_blank">
-                        <img src="../output/analysis/montecarlo/montecarlo_random/policy_barplot.png" class="img-preview" alt="Política não encontrada"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Política não encontrada]</div>');">
-                    </a>
-                </td>
-                <td>
-                    <a href="../output/analysis/montecarlo/montecarlo_random/metrics.html" target="_blank">Métricas</a>
+                    
                 </td>
             </tr>
         </table>
     </div>
 
-    <!-- Repita a mesma tabela para SARSA e Q-Learning, mudando os caminhos para sarsa_*/qlearning_* -->
     <div class="section agent-block" id="sarsa">
         <h2>SARSA</h2>
         <table class="policy-table">
             <tr>
-                <th>Política</th>
-                <th>Curva de aprendizagem</th>
-                <th>Histograma de retornos</th>
+                <th>Policy</th>
+                <th>Learning curve</th>
+                <th>Returns histogram</th>
                 <th>Q-table</th>
-                <th>Política aprendida</th>
-                <th>Métricas</th>
+                <th>Learned policy</th>
             </tr>
-            <!-- Repita para cada política -->
             <tr>
                 <td>Epsilon</td>
                 <td>
-                    <a href="../output/analysis/sarsa/sarsa_epsilon/learning_curve.html" target="_blank">
-                        <img src="../output/analysis/sarsa/sarsa_epsilon/learning_curve.png" class="img-preview" alt="Curva de aprendizagem"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Curva não encontrada]</div>');">
+                    <a href="../output/analysis/sarsa/epsilon/epsilon/learning_curve.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Curve (HTML)</button>
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/sarsa/sarsa_epsilon/returns_histogram.png" target="_blank">
-                        <img src="../output/analysis/sarsa/sarsa_epsilon/returns_histogram.png" class="img-preview" alt="Histograma de retornos"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Histograma não encontrado]</div>');">
+                    <a href="../output/analysis/sarsa/epsilon/epsilon/returns_histogram.png" target="_blank">
+                        <img src="../output/analysis/sarsa/epsilon/epsilon/returns_histogram.png" class="img-preview" alt="Returns histogram"
+                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Histogram not found]</div>');">
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/sarsa/sarsa_epsilon/qtable_heatmap.html" target="_blank">Q-table</a>
-                </td>
-                <td>
-                    <a href="../output/analysis/sarsa/sarsa_epsilon/policy_barplot.html" target="_blank">
-                        <img src="../output/analysis/sarsa/sarsa_epsilon/policy_barplot.png" class="img-preview" alt="Política aprendida"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Política não encontrada]</div>');">
+                    <a href="../output/analysis/sarsa/epsilon/epsilon/qtable_heatmap.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Q-table (HTML)</button>
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/sarsa/sarsa_epsilon/metrics.html" target="_blank">Métricas</a>
+                    <a href="../output/analysis/sarsa/epsilon/epsilon/policy_barplot.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Policy (HTML)</button>
+                    </a>
                 </td>
             </tr>
             <tr>
                 <td>Greedy</td>
                 <td>
-                    <a href="../output/analysis/sarsa/sarsa_greedy/learning_curve.html" target="_blank">
-                        <img src="../output/analysis/sarsa/sarsa_greedy/learning_curve.png" class="img-preview" alt="Curva de aprendizagem"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Curva não encontrada]</div>');">
+                    <a href="../output/analysis/sarsa/greedy/greedy/learning_curve.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Curve (HTML)</button>
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/sarsa/sarsa_greedy/returns_histogram.png" target="_blank">
-                        <img src="../output/analysis/sarsa/sarsa_greedy/returns_histogram.png" class="img-preview" alt="Histograma de retornos"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Histograma não encontrado]</div>');">
+                    <a href="../output/analysis/sarsa/greedy/greedy/returns_histogram.png" target="_blank">
+                        <img src="../output/analysis/sarsa/greedy/greedy/returns_histogram.png" class="img-preview" alt="Returns histogram"
+                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Histogram not found]</div>');">
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/sarsa/sarsa_greedy/qtable_heatmap.html" target="_blank">Q-table</a>
+                    <a href="../output/analysis/sarsa/greedy/greedy/qtable_heatmap.html" target="_blank"><button class="img-preview" style="width:180px;height:40px;">View Q-table (HTML)</button></a>
                 </td>
                 <td>
-                    <a href="../output/analysis/sarsa/sarsa_greedy/policy_barplot.html" target="_blank">
-                        <img src="../output/analysis/sarsa/sarsa_greedy/policy_barplot.png" class="img-preview" alt="Política não encontrada"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Política não encontrada]</div>');">
+                    <a href="../output/analysis/sarsa/greedy/greedy/policy_barplot.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Policy (HTML)</button>
                     </a>
-                </td>
-                <td>
-                    <a href="../output/analysis/sarsa/sarsa_greedy/metrics.html" target="_blank">Métricas</a>
                 </td>
             </tr>
             <tr>
                 <td>Softmax</td>
                 <td>
-                    <a href="../output/analysis/sarsa/sarsa_softmax/learning_curve.html" target="_blank">
-                        <img src="../output/analysis/sarsa/sarsa_softmax/learning_curve.png" class="img-preview" alt="Curva de aprendizagem"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Curva não encontrada]</div>');">
+                    <a href="../output/analysis/sarsa/softmax/softmax/learning_curve.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Curve (HTML)</button>
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/sarsa/sarsa_softmax/returns_histogram.png" target="_blank">
-                        <img src="../output/analysis/sarsa/sarsa_softmax/returns_histogram.png" class="img-preview" alt="Histograma de retornos"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Histograma não encontrado]</div>');">
+                    <a href="../output/analysis/sarsa/softmax/softmax/returns_histogram.png" target="_blank">
+                        <img src="../output/analysis/sarsa/softmax/softmax/returns_histogram.png" class="img-preview" alt="Returns histogram"
+                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Histogram not found]</div>');">
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/sarsa/sarsa_softmax/qtable_heatmap.html" target="_blank">Q-table</a>
+                    <a href="../output/analysis/sarsa/softmax/softmax/qtable_heatmap.html" target="_blank"><button class="img-preview" style="width:180px;height:40px;">View Q-table (HTML)</button></a>
                 </td>
                 <td>
-                    <a href="../output/analysis/sarsa/sarsa_softmax/policy_barplot.html" target="_blank">
-                        <img src="../output/analysis/sarsa/sarsa_softmax/policy_barplot.png" class="img-preview" alt="Política não encontrada"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Política não encontrada]</div>');">
+                    <a href="../output/analysis/sarsa/softmax/softmax/policy_barplot.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Policy (HTML)</button>
                     </a>
-                </td>
-                <td>
-                    <a href="../output/analysis/sarsa/sarsa_softmax/metrics.html" target="_blank">Métricas</a>
                 </td>
             </tr>
             <tr>
                 <td>Decay</td>
                 <td>
-                    <a href="../output/analysis/sarsa/sarsa_decay/learning_curve.html" target="_blank">
-                        <img src="../output/analysis/sarsa/sarsa_decay/learning_curve.png" class="img-preview" alt="Curva de aprendizagem"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Curva não encontrada]</div>');">
+                    <a href="../output/analysis/sarsa/decay/decay/learning_curve.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Curve (HTML)</button>
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/sarsa/sarsa_decay/returns_histogram.png" target="_blank">
-                        <img src="../output/analysis/sarsa/sarsa_decay/returns_histogram.png" class="img-preview" alt="Histograma de retornos"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Histograma não encontrado]</div>');">
+                    <a href="../output/analysis/sarsa/decay/decay/returns_histogram.png" target="_blank">
+                        <img src="../output/analysis/sarsa/decay/decay/returns_histogram.png" class="img-preview" alt="Returns histogram"
+                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Histogram not found]</div>');">
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/sarsa/sarsa_decay/qtable_heatmap.html" target="_blank">Q-table</a>
+                    <a href="../output/analysis/sarsa/decay/decay/qtable_heatmap.html" target="_blank"><button class="img-preview" style="width:180px;height:40px;">View Q-table (HTML)</button></a>
                 </td>
                 <td>
-                    <a href="../output/analysis/sarsa/sarsa_decay/policy_barplot.html" target="_blank">
-                        <img src="../output/analysis/sarsa/sarsa_decay/policy_barplot.png" class="img-preview" alt="Política não encontrada"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Política não encontrada]</div>');">
+                    <a href="../output/analysis/sarsa/decay/decay/policy_barplot.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Policy (HTML)</button>
                     </a>
-                </td>
-                <td>
-                    <a href="../output/analysis/sarsa/sarsa_decay/metrics.html" target="_blank">Métricas</a>
                 </td>
             </tr>
             <tr>
                 <td>Random</td>
                 <td>
-                    <a href="../output/analysis/sarsa/sarsa_random/learning_curve.html" target="_blank">
-                        <img src="../output/analysis/sarsa/sarsa_random/learning_curve.png" class="img-preview" alt="Curva de aprendizagem"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Curva não encontrada]</div>');">
+                    <a href="../output/analysis/sarsa/random/random/learning_curve.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Curve (HTML)</button>
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/sarsa/sarsa_random/returns_histogram.png" target="_blank">
-                        <img src="../output/analysis/sarsa/sarsa_random/returns_histogram.png" class="img-preview" alt="Histograma de retornos"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Histograma não encontrado]</div>');">
+                    <a href="../output/analysis/sarsa/random/random/returns_histogram.png" target="_blank">
+                        <img src="../output/analysis/sarsa/random/random/returns_histogram.png" class="img-preview" alt="Returns histogram"
+                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Histogram not found]</div>');">
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/sarsa/sarsa_random/qtable_heatmap.html" target="_blank">Q-table</a>
                 </td>
                 <td>
-                    <a href="../output/analysis/sarsa/sarsa_random/policy_barplot.html" target="_blank">
-                        <img src="../output/analysis/sarsa/sarsa_random/policy_barplot.png" class="img-preview" alt="Política não encontrada"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Política não encontrada]</div>');">
-                    </a>
-                </td>
-                <td>
-                    <a href="../output/analysis/sarsa/sarsa_random/metrics.html" target="_blank">Métricas</a>
                 </td>
             </tr>
         </table>
@@ -463,160 +410,137 @@ Este ficheiro é gerado automaticamente.
         <h2>Q-Learning</h2>
         <table class="policy-table">
             <tr>
-                <th>Política</th>
-                <th>Curva de aprendizagem</th>
-                <th>Histograma de retornos</th>
+                <th>Policy</th>
+                <th>Learning curve</th>
+                <th>Returns histogram</th>
                 <th>Q-table</th>
-                <th>Política aprendida</th>
-                <th>Métricas</th>
+                <th>Learned policy</th>
             </tr>
-            <!-- Repita para cada política -->
             <tr>
                 <td>Epsilon</td>
                 <td>
-                    <a href="../output/analysis/qlearning/qlearning_epsilon/learning_curve.html" target="_blank">
-                        <img src="../output/analysis/qlearning/qlearning_epsilon/learning_curve.png" class="img-preview" alt="Curva de aprendizagem"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Curva não encontrada]</div>');">
+                    <a href="../output/analysis/qlearning/epsilon/epsilon/learning_curve.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Curve (HTML)</button>
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/qlearning/qlearning_epsilon/returns_histogram.png" target="_blank">
-                        <img src="../output/analysis/qlearning/qlearning_epsilon/returns_histogram.png" class="img-preview" alt="Histograma de retornos"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Histograma não encontrado]</div>');">
+                    <a href="../output/analysis/qlearning/epsilon/epsilon/returns_histogram.png" target="_blank">
+                        <img src="../output/analysis/qlearning/epsilon/epsilon/returns_histogram.png" class="img-preview" alt="Returns histogram"
+                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Histogram not found]</div>');">
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/qlearning/qlearning_epsilon/qtable_heatmap.html" target="_blank">Q-table</a>
-                </td>
-                <td>
-                    <a href="../output/analysis/qlearning/qlearning_epsilon/policy_barplot.html" target="_blank">
-                        <img src="../output/analysis/qlearning/qlearning_epsilon/policy_barplot.png" class="img-preview" alt="Política aprendida"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Política não encontrada]</div>');">
+                    <a href="../output/analysis/qlearning/epsilon/epsilon/qtable_heatmap.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Q-table (HTML)</button>
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/qlearning/qlearning_epsilon/metrics.html" target="_blank">Métricas</a>
+                    <a href="../output/analysis/qlearning/epsilon/epsilon/policy_barplot.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Policy (HTML)</button>
+                    </a>
                 </td>
             </tr>
             <tr>
                 <td>Greedy</td>
                 <td>
-                    <a href="../output/analysis/qlearning/qlearning_greedy/learning_curve.html" target="_blank">
-                        <img src="../output/analysis/qlearning/qlearning_greedy/learning_curve.png" class="img-preview" alt="Curva de aprendizagem"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Curva não encontrada]</div>');">
+                    <a href="../output/analysis/qlearning/greedy/greedy/learning_curve.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Curve (HTML)</button>
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/qlearning/qlearning_greedy/returns_histogram.png" target="_blank">
-                        <img src="../output/analysis/qlearning/qlearning_greedy/returns_histogram.png" class="img-preview" alt="Histograma de retornos"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Histograma não encontrado]</div>');">
+                    <a href="../output/analysis/qlearning/greedy/greedy/returns_histogram.png" target="_blank">
+                        <img src="../output/analysis/qlearning/greedy/greedy/returns_histogram.png" class="img-preview" alt="Returns histogram"
+                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Histogram not found]</div>');">
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/qlearning/qlearning_greedy/qtable_heatmap.html" target="_blank">Q-table</a>
-                </td>
-                <td>
-                    <a href="../output/analysis/qlearning/qlearning_greedy/policy_barplot.html" target="_blank">
-                        <img src="../output/analysis/qlearning/qlearning_greedy/policy_barplot.png" class="img-preview" alt="Política não encontrada"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Política não encontrada]</div>');">
+                    <a href="../output/analysis/qlearning/greedy/greedy/qtable_heatmap.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Q-table (HTML)</button>
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/qlearning/qlearning_greedy/metrics.html" target="_blank">Métricas</a>
+                    <a href="../output/analysis/qlearning/greedy/greedy/policy_barplot.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Policy (HTML)</button>
+                    </a>
                 </td>
             </tr>
             <tr>
                 <td>Softmax</td>
                 <td>
-                    <a href="../output/analysis/qlearning/qlearning_softmax/learning_curve.html" target="_blank">
-                        <img src="../output/analysis/qlearning/qlearning_softmax/learning_curve.png" class="img-preview" alt="Curva de aprendizagem"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Curva não encontrada]</div>');">
+                    <a href="../output/analysis/qlearning/softmax/softmax/learning_curve.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Curve (HTML)</button>
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/qlearning/qlearning_softmax/returns_histogram.png" target="_blank">
-                        <img src="../output/analysis/qlearning/qlearning_softmax/returns_histogram.png" class="img-preview" alt="Histograma de retornos"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Histograma não encontrado]</div>');">
+                    <a href="../output/analysis/qlearning/softmax/softmax/returns_histogram.png" target="_blank">
+                        <img src="../output/analysis/qlearning/softmax/softmax/returns_histogram.png" class="img-preview" alt="Returns histogram"
+                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Histogram not found]</div>');">
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/qlearning/qlearning_softmax/qtable_heatmap.html" target="_blank">Q-table</a>
-                </td>
-                <td>
-                    <a href="../output/analysis/qlearning/qlearning_softmax/policy_barplot.html" target="_blank">
-                        <img src="../output/analysis/qlearning/qlearning_softmax/policy_barplot.png" class="img-preview" alt="Política não encontrada"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Política não encontrada]</div>');">
+                    <a href="../output/analysis/qlearning/softmax/softmax/qtable_heatmap.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Q-table (HTML)</button>
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/qlearning/qlearning_softmax/metrics.html" target="_blank">Métricas</a>
+                    <a href="../output/analysis/qlearning/softmax/softmax/policy_barplot.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Policy (HTML)</button>
+                    </a>
                 </td>
             </tr>
             <tr>
                 <td>Decay</td>
                 <td>
-                    <a href="../output/analysis/qlearning/qlearning_decay/learning_curve.html" target="_blank">
-                        <img src="../output/analysis/qlearning/qlearning_decay/learning_curve.png" class="img-preview" alt="Curva de aprendizagem"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Curva não encontrada]</div>');">
+                    <a href="../output/analysis/qlearning/decay/decay/learning_curve.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Curve (HTML)</button>
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/qlearning/qlearning_decay/returns_histogram.png" target="_blank">
-                        <img src="../output/analysis/qlearning/qlearning_decay/returns_histogram.png" class="img-preview" alt="Histograma de retornos"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Histograma não encontrado]</div>');">
+                    <a href="../output/analysis/qlearning/decay/decay/returns_histogram.png" target="_blank">
+                        <img src="../output/analysis/qlearning/decay/decay/returns_histogram.png" class="img-preview" alt="Returns histogram"
+                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Histogram not found]</div>');">
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/qlearning/qlearning_decay/qtable_heatmap.html" target="_blank">Q-table</a>
-                </td>
-                <td>
-                    <a href="../output/analysis/qlearning/qlearning_decay/policy_barplot.html" target="_blank">
-                        <img src="../output/analysis/qlearning/qlearning_decay/policy_barplot.png" class="img-preview" alt="Política não encontrada"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Política não encontrada]</div>');">
+                    <a href="../output/analysis/qlearning/decay/decay/qtable_heatmap.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Q-table (HTML)</button>
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/qlearning/qlearning_decay/metrics.html" target="_blank">Métricas</a>
+                    <a href="../output/analysis/qlearning/decay/decay/policy_barplot.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Policy (HTML)</button>
+                    </a>
                 </td>
-            </tr>
             <tr>
                 <td>Random</td>
                 <td>
-                    <a href="../output/analysis/qlearning/qlearning_random/learning_curve.html" target="_blank">
-                        <img src="../output/analysis/qlearning/qlearning_random/learning_curve.png" class="img-preview" alt="Curva de aprendizagem"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Curva não encontrada]</div>');">
+                    <a href="../output/analysis/qlearning/random/random/learning_curve.html" target="_blank">
+                        <button class="img-preview" style="width:180px;height:40px;">View Curve (HTML)</button>
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/qlearning/qlearning_random/returns_histogram.png" target="_blank">
-                        <img src="../output/analysis/qlearning/qlearning_random/returns_histogram.png" class="img-preview" alt="Histograma de retornos"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Histograma não encontrado]</div>');">
+                    <a href="../output/analysis/qlearning/random/random/returns_histogram.png" target="_blank">
+                        <img src="../output/analysis/qlearning/random/random/returns_histogram.png" class="img-preview" alt="Returns histogram"
+                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Histogram not found]</div>');">
                     </a>
                 </td>
                 <td>
-                    <a href="../output/analysis/qlearning/qlearning_random/qtable_heatmap.html" target="_blank">Q-table</a>
+                    
                 </td>
                 <td>
-                    <a href="../output/analysis/qlearning/qlearning_random/policy_barplot.html" target="_blank">
-                        <img src="../output/analysis/qlearning/qlearning_random/policy_barplot.png" class="img-preview" alt="Política não encontrada"
-                             onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div class=\'missing\'>[Política não encontrada]</div>');">
-                    </a>
-                </td>
-                <td>
-                    <a href="../output/analysis/qlearning/qlearning_random/metrics.html" target="_blank">Métricas</a>
+                    
                 </td>
             </tr>
         </table>
     </div>
 
-    <!-- Random Baseline -->
     <div class="section agent-block" id="random">
         <h2>Random (Baseline)</h2>
         <div class="policy-block">
             <ul>
-                <li><a href="../output/analysis/montecarlo/montecarlo_random/metrics.html" target="_blank">Monte Carlo Random - Métricas</a></li>
-                <li><a href="../output/analysis/sarsa/sarsa_random/metrics.html" target="_blank">SARSA Random - Métricas</a></li>
-                <li><a href="../output/analysis/qlearning/qlearning_random/metrics.html" target="_blank">Q-Learning Random - Métricas</a></li>
+                <li><a href="../output/analysis/montecarlo/random/random/learning_curve.html" target="_blank">Monte Carlo Random - Learning Curves</a></li>
+                <li><a href="../output/analysis/sarsa/random/random/learning_curve.html" target="_blank">SARSA Random - Learning Curves</a></li>
+                <li><a href="../output/analysis/qlearning/random/random/learning_curve.html" target="_blank">Q-Learning Random - Learning Curves</a></li>
             </ul>
         </div>
     </div>

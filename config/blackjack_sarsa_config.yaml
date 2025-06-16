@@ -11,8 +11,8 @@ training:
   early_stopping: false
   early_stopping_patience: 1000
   early_stopping_delta: 0.01
-  save_best: true
-  verbose: true
+  save_best: True
+  verbose: True
 plot:
   learning_curve_window: 200
   save_path: ../results/sarsa_learning_curve.png

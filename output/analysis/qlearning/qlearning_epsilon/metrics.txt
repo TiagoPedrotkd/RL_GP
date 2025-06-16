@@ -1,9 +1,0 @@
-Retorno médio (primeiro seed): -0.1656
-Vitórias: 19047
-Derrotas: 27326
-Empates: 3627
-Taxa de vitória: 0.3809
-Parâmetros: {'alpha': 0.1, 'gamma': 1.0, 'epsilon': 0.05, 'policy': 'epsilon'}
-Retornos de todos os seeds: [-0.16558, -0.1684, -0.15836, -0.16204, -0.16928]
-Média dos seeds: -0.1647
-Desvio padrão dos seeds: 0.0041

@@ -1,4 +1,3 @@
-
 # 🤖 Reinforcement Learning Project
 
 This repository contains the implementation of a Reinforcement Learning (RL) project developed as part of the RL course. The goal is to train and compare multiple RL agents on two distinct environments from the [Gymnasium](https://gymnasium.farama.org/) library, focusing on performance, convergence, and the trade-off between exploration and exploitation.
@@ -18,16 +17,29 @@ This repository contains the implementation of a Reinforcement Learning (RL) pro
 
 ```
 RL_GP/
-├── agents/             # RL algorithm implementations
-├── environments/       # Custom wrappers and environment configurations
-├── training/           # Training scripts for each agent/environment
-├── evaluation/         # Evaluation scripts and comparative analysis
-├── results/            # Training logs, reward curves, and saved models
-├── notebooks/          # Jupyter notebooks for analysis and plotting
-├── config/             # YAML configuration files
-├── requirements.txt    # Python dependencies
-├── report.pdf          # Final project report
-└── README.md           # This file
+|── notebooks/
+|── src/
+│   └── agents/             # RL algorithm implementations (Q-Learning, SARSA, Monte Carlo, etc.)
+│   └── environments/       # Custom wrappers and environment configurations (Blackjack, Pendulum)
+│   └── training/           # Training scripts and grid search utilities
+│   └── evaluation/         # Evaluation scripts and comparative analysis
+│   └── main.py             # Main entry point to run all experiments
+├── config/                 # YAML configuration files for experiments
+├── output/                 # Generated plots, HTML reports, and metrics for each experiment
+│   └── analysis/       
+│       ├── montecarlo/
+│       ├── sarsa/
+│       ├── qlearning/
+│       ├── pendulum_qlearning/
+│       └── pendulum_sarsa/
+|   └── checkpoints/
+|   └── best_qtable.npy
+├── logs/                   # Training logs for each experiment
+├── report/                 # Final HTML report and supporting files
+├── LICENSE
+├── requirements.txt        # Python dependencies
+└── README.md               # This file
+
 ```
 
 ---
@@ -58,36 +70,47 @@ pip install -r requirements.txt
 
 ## 🚀 How to Run
 
-### Train Agent on Environment 1:
+### Run All Experiments (Blackjack and Pendulum)
 
 ```bash
-python training/train_env1.py
+python -m src.main
 ```
 
-### Evaluate Agent on Environment 1:
+This will:
+- Train all agents (Monte Carlo, SARSA, Q-Learning, Random) on Blackjack.
+- Train Q-Learning and SARSA agents on Pendulum.
+- Perform grid search for each agent/policy.
+- Save all logs, plots, and HTML reports in `output/analysis/` and `logs/`.
+
+### Run Only Blackjack Experiments
 
 ```bash
-python evaluation/evaluate_env1.py
+python -m src.training.train_blackjack
 ```
 
-> Training metrics and visualizations will be saved in the `results/` directory.
+### Run Only Pendulum Experiments
+
+```bash
+python -m src.training.train_pendulum
+```
+
+> All training metrics, visualizations, and HTML reports will be saved in the `output/analysis/` directory, organized by agent and policy.
 
 ---
 
-## 📊 Visualizations
+## 📊 Visualizations & Reports
 
-- Total reward per episode
-- Moving average of rewards
-- Convergence curves
-- Performance comparison across agents
-
-> Visual outputs and further analysis can be found in the `notebooks/` folder.
+- **Learning curves** (moving average of returns)
+- **Return histograms**
+- **Q-table heatmaps** and **policy visualizations**
+- **Comparative plots** across policies and agents
+- **HTML reports** for each experiment and a global comparative report in `report/report.html`
 
 ---
 
 ## 📘 Report
 
-A detailed description of the methodology, evaluation metrics, challenges, and results is available in [`report.pdf`](./report.pdf).
+A detailed description of the methodology, evaluation metrics, challenges, and results is available in [`report/report.html`](./report/report.html) and [`report.pdf`](./report.pdf).
 
 ---
 
@@ -96,7 +119,7 @@ A detailed description of the methodology, evaluation metrics, challenges, and r
 Developed by:
 
 - Tiago Pedro (tiagopedrosoares02@gmail.com)
-- Tomás Silva (tomasestrociosilva@gmail.com )
+- Tomás Silva (tomasestrociosilva@gmail.com)
 - Cadmo Diogo (cadmaya@hotmail.com)
 
 ---
