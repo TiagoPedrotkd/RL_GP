@@ -46,7 +46,7 @@ def run_training(
             os.makedirs(policy_dir, exist_ok=True)
 
             env = env_config["make_env"](seed=42)
-            from agents.pendulum_rl import PendulumRL
+            from src.agents.pendulum_rl import PendulumRL
             rl = PendulumRL(
                 angle_buckets=env_config.get("angle_buckets", 25),
                 vel_buckets=env_config.get("vel_buckets", 25),

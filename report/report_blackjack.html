@@ -1,0 +1,530 @@
+<!--
+Comparative Report of Agents and Policies - Blackjack RL
+This file is generated automatically.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Comparative Report of Agents and Policies - Blackjack RL</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #f9f9fa 0%, #e3e6f3 100%);
+            color: #222;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 32px auto 32px auto;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px #bfc7e6;
+            padding: 32px 40px 40px 40px;
+        }
+        h1 {
+            color: #1a237e;
+            font-size: 2.5em;
+            margin-bottom: 0.2em;
+        }
+        h2 {
+            color: #283593;
+            margin-top: 1.5em;
+            margin-bottom: 0.7em;
+        }
+        h3 {
+            color: #3949ab;
+            margin-bottom: 0.5em;
+        }
+        .img-preview, .comparison-img {
+            max-width: 600px;
+            margin: 10px 0;
+            border-radius: 6px;
+            background: #f8fafc;
+            box-shadow: 0 1px 4px #e3e6f3;
+        }
+        .comparison-img {
+            border: 2px solid #1a237e;
+            margin: 20px 10px 20px 0;
+        }
+        .nav {
+            margin-bottom: 30px;
+            background: #e3e6f3;
+            border-radius: 8px;
+            padding: 12px 18px;
+            display: flex;
+            gap: 18px;
+        }
+        .nav a {
+            color: #283593;
+            font-weight: bold;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .nav a:hover {
+            color: #1565c0;
+            text-decoration: underline;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        /* Cards */
+        .policy-section { margin-top: 32px; }
+        .policy-cards { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 16px; }
+        .policy-card {
+            background: #f8fafc;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px rgba(40,53,147,0.07);
+            padding: 24px 20px 18px 20px;
+            min-width: 220px;
+            flex: 1 1 220px;
+            max-width: 270px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: box-shadow 0.2s, transform 0.2s;
+            position: relative;
+        }
+        .policy-card:hover {
+            box-shadow: 0 6px 24px rgba(40,53,147,0.18);
+            transform: translateY(-4px) scale(1.03);
+        }
+        .policy-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #283593;
+            margin-bottom: 18px;
+            letter-spacing: 0.5px;
+        }
+        .policy-links {
+            display: flex;
+            flex-direction: row;
+            gap: 18px;
+            margin-bottom: 6px;
+        }
+        .policy-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #3949ab;
+            font-size: 0.97em;
+            transition: color 0.15s;
+        }
+        .policy-link:hover { color: #1a237e; }
+        .policy-link svg {
+            width: 32px; height: 32px;
+            margin-bottom: 4px;
+            fill: #7986cb;
+            transition: fill 0.15s;
+        }
+        .policy-link:hover svg { fill: #283593; }
+        .missing {
+            color: #b71c1c;
+            font-size: 0.95em;
+        }
+        .legend {
+            font-size: 1em;
+            color: #444;
+            margin-bottom: 10px;
+            background: #e3e6f3;
+            border-radius: 8px;
+            padding: 10px 18px;
+        }
+        @media (max-width: 900px) {
+            .container { padding: 12px 4vw; }
+            .comparison-img, .img-preview { max-width: 98vw; }
+            .policy-cards { flex-direction: column; gap: 18px; }
+            .policy-card { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Comparative Report of Agents and Policies - Blackjack RL</h1>
+    <div class="nav">
+        <a href="#comparative">General Comparison</a>
+        <a href="#montecarlo">Monte Carlo</a>
+        <a href="#sarsa">SARSA</a>
+        <a href="#qlearning">Q-Learning</a>
+        <a href="#random">Random (baseline)</a>
+    </div>
+    <p>This report presents the results of the <b>Monte Carlo</b>, <b>SARSA</b>, <b>Q-Learning</b>, and <b>Random</b> agents for different exploration policies. It includes metrics, plots, Q-tables, and links for detailed analysis.</p>
+
+    <div class="section" id="comparative">
+        <h2>General Policy Comparison</h2>
+        <div class="legend">
+            <b>Learning curves (moving average):</b> Allows comparing the performance of each policy throughout training.<br>
+            <b>Note:</b> Click on the policy links to see details, Q-tables, and histograms.
+        </div>
+        <img src="../output/analysis/montecarlo/learning_curves_comparison.png" class="comparison-img" alt="Monte Carlo Comparison">
+        <img src="../output/analysis/sarsa/learning_curves_comparison.png" class="comparison-img" alt="SARSA Comparison">
+        <img src="../output/analysis/qlearning/learning_curves_comparison.png" class="comparison-img" alt="Q-Learning Comparison">
+    </div>
+
+    <div id="montecarlo" class="policy-section">
+        <h2>Monte Carlo</h2>
+        <p>
+            <strong>Explanation:</strong> Below are the results for different Monte Carlo exploration policies. Each card provides access to the learning curve, returns histogram, Q-table heatmap, and the learned policy. These visualizations help to analyze how each exploration strategy affects learning efficiency and policy quality.
+        </p>
+        <div class="policy-cards">
+            <div class="policy-card">
+                <div class="policy-title">Epsilon</div>
+                <p style="font-size:0.93em; margin-bottom:10px;">
+                    <strong>Analysis:</strong> Epsilon-greedy balances exploration and exploitation, often leading to stable learning and avoiding local optima, but may converge slower than more directed strategies.
+                </p>
+                <div class="policy-links">
+                    <a class="policy-link" href="../output/analysis/montecarlo/epsilon/epsilon/learning_curve.html" target="_blank" title="Learning Curve">
+                        <svg viewBox="0 0 24 24"><path d="M3 17v2h18v-2H3zm2-2h2v-5H5v5zm4 0h2V7h-2v8zm4 0h2v-3h-2v3zm4 0h2v-8h-2v8z"/></svg>
+                        Curve
+                    </a>
+                    <a class="policy-link" href="../output/analysis/montecarlo/epsilon/epsilon/returns_histogram.png" target="_blank" title="Returns Histogram">
+                        <svg viewBox="0 0 24 24"><path d="M3 17h2v-7H3v7zm4 0h2v-3H7v3zm4 0h2v-10h-2v10zm4 0h2v-5h-2v5zm4 0h2v-2h-2v2z"/></svg>
+                        Histogram
+                    </a>
+                    <a class="policy-link" href="../output/analysis/montecarlo/epsilon/epsilon/qtable_heatmap.html" target="_blank" title="Q-table Heatmap">
+                        <svg viewBox="0 0 24 24"><path d="M3 5v14h18V5H3zm16 2v2h-6V7h6zm0 4v2h-6v-2h6zm0 4v2h-6v-2h6zm-8-8v2H5V7h6zm0 4v2H5v-2h6zm0 4v2H5v-2h6z"/></svg>
+                        Q-table
+                    </a>
+                    <a class="policy-link" href="../output/analysis/montecarlo/epsilon/epsilon/policy_barplot.html" target="_blank" title="Learned Policy">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+                        Policy
+                    </a>
+                </div>
+            </div>
+            <div class="policy-card">
+                <div class="policy-title">Greedy</div>
+                <p style="font-size:0.93em; margin-bottom:10px;">
+                    <strong>Analysis:</strong> Greedy always selects the action with the highest estimated value. This can speed up convergence, but risks getting stuck in suboptimal policies due to lack of exploration.
+                </p>
+                <div class="policy-links">
+                    <a class="policy-link" href="../output/analysis/montecarlo/greedy/greedy/learning_curve.html" target="_blank" title="Learning Curve">
+                        <svg viewBox="0 0 24 24"><path d="M3 17v2h18v-2H3zm2-2h2v-5H5v5zm4 0h2V7h-2v8zm4 0h2v-3h-2v3zm4 0h2v-8h-2v8z"/></svg>
+                        Curve
+                    </a>
+                    <a class="policy-link" href="../output/analysis/montecarlo/greedy/greedy/returns_histogram.png" target="_blank" title="Returns Histogram">
+                        <svg viewBox="0 0 24 24"><path d="M3 17h2v-7H3v7zm4 0h2v-3H7v3zm4 0h2v-10h-2v10zm4 0h2v-5h-2v5zm4 0h2v-2h-2v2z"/></svg>
+                        Histogram
+                    </a>
+                    <a class="policy-link" href="../output/analysis/montecarlo/greedy/greedy/qtable_heatmap.html" target="_blank" title="Q-table Heatmap">
+                        <svg viewBox="0 0 24 24"><path d="M3 5v14h18V5H3zm16 2v2h-6V7h6zm0 4v2h-6v-2h6zm0 4v2h-6v-2h6zm-8-8v2H5V7h6zm0 4v2H5v-2h6zm0 4v2H5v-2h6z"/></svg>
+                        Q-table
+                    </a>
+                    <a class="policy-link" href="../output/analysis/montecarlo/greedy/greedy/policy_barplot.html" target="_blank" title="Learned Policy">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+                        Policy
+                    </a>
+                </div>
+            </div>
+            <div class="policy-card">
+                <div class="policy-title">Softmax</div>
+                <p style="font-size:0.93em; margin-bottom:10px;">
+                    <strong>Analysis:</strong> Softmax selects actions probabilistically based on their Q-values, promoting more nuanced exploration. This can help discover better policies but may require careful tuning of the temperature parameter.
+                </p>
+                <div class="policy-links">
+                    <a class="policy-link" href="../output/analysis/montecarlo/softmax/softmax/learning_curve.html" target="_blank" title="Learning Curve">
+                        <svg viewBox="0 0 24 24"><path d="M3 17v2h18v-2H3zm2-2h2v-5H5v5zm4 0h2V7h-2v8zm4 0h2v-3h-2v3zm4 0h2v-8h-2v8z"/></svg>
+                        Curve
+                    </a>
+                    <a class="policy-link" href="../output/analysis/montecarlo/softmax/softmax/returns_histogram.png" target="_blank" title="Returns Histogram">
+                        <svg viewBox="0 0 24 24"><path d="M3 17h2v-7H3v7zm4 0h2v-3H7v3zm4 0h2v-10h-2v10zm4 0h2v-5h-2v5zm4 0h2v-2h-2v2z"/></svg>
+                        Histogram
+                    </a>
+                    <a class="policy-link" href="../output/analysis/montecarlo/softmax/softmax/qtable_heatmap.html" target="_blank" title="Q-table Heatmap">
+                        <svg viewBox="0 0 24 24"><path d="M3 5v14h18V5H3zm16 2v2h-6V7h6zm0 4v2h-6v-2h6zm0 4v2h-6v-2h6zm-8-8v2H5V7h6zm0 4v2H5v-2h6zm0 4v2H5v-2h6z"/></svg>
+                        Q-table
+                    </a>
+                    <a class="policy-link" href="../output/analysis/montecarlo/softmax/softmax/policy_barplot.html" target="_blank" title="Learned Policy">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+                        Policy
+                    </a>
+                </div>
+            </div>
+            <div class="policy-card">
+                <div class="policy-title">Decay</div>
+                <p style="font-size:0.93em; margin-bottom:10px;">
+                    <strong>Analysis:</strong> Decaying epsilon-greedy starts with high exploration and gradually shifts to exploitation, often yielding robust learning and combining the benefits of initial exploration with eventual policy refinement.
+                </p>
+                <div class="policy-links">
+                    <a class="policy-link" href="../output/analysis/montecarlo/decay/decay/learning_curve.html" target="_blank" title="Learning Curve">
+                        <svg viewBox="0 0 24 24"><path d="M3 17v2h18v-2H3zm2-2h2v-5H5v5zm4 0h2V7h-2v8zm4 0h2v-3h-2v3zm4 0h2v-8h-2v8z"/></svg>
+                        Curve
+                    </a>
+                    <a class="policy-link" href="../output/analysis/montecarlo/decay/decay/returns_histogram.png" target="_blank" title="Returns Histogram">
+                        <svg viewBox="0 0 24 24"><path d="M3 17h2v-7H3v7zm4 0h2v-3H7v3zm4 0h2v-10h-2v10zm4 0h2v-5h-2v5zm4 0h2v-2h-2v2z"/></svg>
+                        Histogram
+                    </a>
+                    <a class="policy-link" href="../output/analysis/montecarlo/decay/decay/qtable_heatmap.html" target="_blank" title="Q-table Heatmap">
+                        <svg viewBox="0 0 24 24"><path d="M3 5v14h18V5H3zm16 2v2h-6V7h6zm0 4v2h-6v-2h6zm0 4v2h-6v-2h6zm-8-8v2H5V7h6zm0 4v2H5v-2h6zm0 4v2H5v-2h6z"/></svg>
+                        Q-table
+                    </a>
+                    <a class="policy-link" href="../output/analysis/montecarlo/decay/decay/policy_barplot.html" target="_blank" title="Learned Policy">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+                        Policy
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="sarsa" class="policy-section">
+        <h2>SARSA</h2>
+        <p>
+            <strong>Explanation:</strong> This section presents the SARSA agent's results under different exploration policies. The cards below provide access to key metrics for each policy, enabling a detailed comparison of their impact on learning dynamics and final performance.
+        </p>
+        <div class="policy-cards">
+            <div class="policy-card">
+                <div class="policy-title">Epsilon</div>
+                <p style="font-size:0.93em; margin-bottom:10px;">
+                    <strong>Analysis:</strong> Epsilon-greedy in SARSA maintains exploration throughout training, which can help avoid premature convergence but may result in slower learning compared to more exploitative strategies.
+                </p>
+                <div class="policy-links">
+                    <a class="policy-link" href="../output/analysis/sarsa/epsilon/epsilon/learning_curve.html" target="_blank" title="Learning Curve">
+                        <svg viewBox="0 0 24 24"><path d="M3 17v2h18v-2H3zm2-2h2v-5H5v5zm4 0h2V7h-2v8zm4 0h2v-3h-2v3zm4 0h2v-8h-2v8z"/></svg>
+                        Curve
+                    </a>
+                    <a class="policy-link" href="../output/analysis/sarsa/epsilon/epsilon/returns_histogram.png" target="_blank" title="Returns Histogram">
+                        <svg viewBox="0 0 24 24"><path d="M3 17h2v-7H3v7zm4 0h2v-3H7v3zm4 0h2v-10h-2v10zm4 0h2v-5h-2v5zm4 0h2v-2h-2v2z"/></svg>
+                        Histogram
+                    </a>
+                    <a class="policy-link" href="../output/analysis/sarsa/epsilon/epsilon/qtable_heatmap.html" target="_blank" title="Q-table Heatmap">
+                        <svg viewBox="0 0 24 24"><path d="M3 5v14h18V5H3zm16 2v2h-6V7h6zm0 4v2h-6v-2h6zm0 4v2h-6v-2h6zm-8-8v2H5V7h6zm0 4v2H5v-2h6zm0 4v2H5v-2h6z"/></svg>
+                        Q-table
+                    </a>
+                    <a class="policy-link" href="../output/analysis/sarsa/epsilon/epsilon/policy_barplot.html" target="_blank" title="Learned Policy">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+                        Policy
+                    </a>
+                </div>
+            </div>
+            <div class="policy-card">
+                <div class="policy-title">Greedy</div>
+                <p style="font-size:0.93em; margin-bottom:10px;">
+                    <strong>Analysis:</strong> The greedy policy in SARSA can quickly exploit learned values but is prone to suboptimal solutions if the initial exploration is insufficient.
+                </p>
+                <div class="policy-links">
+                    <a class="policy-link" href="../output/analysis/sarsa/greedy/greedy/learning_curve.html" target="_blank" title="Learning Curve">
+                        <svg viewBox="0 0 24 24"><path d="M3 17v2h18v-2H3zm2-2h2v-5H5v5zm4 0h2V7h-2v8zm4 0h2v-3h-2v3zm4 0h2v-8h-2v8z"/></svg>
+                        Curve
+                    </a>
+                    <a class="policy-link" href="../output/analysis/sarsa/greedy/greedy/returns_histogram.png" target="_blank" title="Returns Histogram">
+                        <svg viewBox="0 0 24 24"><path d="M3 17h2v-7H3v7zm4 0h2v-3H7v3zm4 0h2v-10h-2v10zm4 0h2v-5h-2v5zm4 0h2v-2h-2v2z"/></svg>
+                        Histogram
+                    </a>
+                    <a class="policy-link" href="../output/analysis/sarsa/greedy/greedy/qtable_heatmap.html" target="_blank" title="Q-table Heatmap">
+                        <svg viewBox="0 0 24 24"><path d="M3 5v14h18V5H3zm16 2v2h-6V7h6zm0 4v2h-6v-2h6zm0 4v2h-6v-2h6zm-8-8v2H5V7h6zm0 4v2H5v-2h6zm0 4v2H5v-2h6z"/></svg>
+                        Q-table
+                    </a>
+                    <a class="policy-link" href="../output/analysis/sarsa/greedy/greedy/policy_barplot.html" target="_blank" title="Learned Policy">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+                        Policy
+                    </a>
+                </div>
+            </div>
+            <div class="policy-card">
+                <div class="policy-title">Softmax</div>
+                <p style="font-size:0.93em; margin-bottom:10px;">
+                    <strong>Analysis:</strong> Softmax exploration in SARSA allows for more balanced action selection, potentially leading to better long-term policies, though it may require more episodes to converge.
+                </p>
+                <div class="policy-links">
+                    <a class="policy-link" href="../output/analysis/sarsa/softmax/softmax/learning_curve.html" target="_blank" title="Learning Curve">
+                        <svg viewBox="0 0 24 24"><path d="M3 17v2h18v-2H3zm2-2h2v-5H5v5zm4 0h2V7h-2v8zm4 0h2v-3h-2v3zm4 0h2v-8h-2v8z"/></svg>
+                        Curve
+                    </a>
+                    <a class="policy-link" href="../output/analysis/sarsa/softmax/softmax/returns_histogram.png" target="_blank" title="Returns Histogram">
+                        <svg viewBox="0 0 24 24"><path d="M3 17h2v-7H3v7zm4 0h2v-3H7v3zm4 0h2v-10h-2v10zm4 0h2v-5h-2v5zm4 0h2v-2h-2v2z"/></svg>
+                        Histogram
+                    </a>
+                    <a class="policy-link" href="../output/analysis/sarsa/softmax/softmax/qtable_heatmap.html" target="_blank" title="Q-table Heatmap">
+                        <svg viewBox="0 0 24 24"><path d="M3 5v14h18V5H3zm16 2v2h-6V7h6zm0 4v2h-6v-2h6zm0 4v2h-6v-2h6zm-8-8v2H5V7h6zm0 4v2H5v-2h6zm0 4v2H5v-2h6z"/></svg>
+                        Q-table
+                    </a>
+                    <a class="policy-link" href="../output/analysis/sarsa/softmax/softmax/policy_barplot.html" target="_blank" title="Learned Policy">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+                        Policy
+                    </a>
+                </div>
+            </div>
+            <div class="policy-card">
+                <div class="policy-title">Decay</div>
+                <p style="font-size:0.93em; margin-bottom:10px;">
+                    <strong>Analysis:</strong> Decaying exploration in SARSA provides a good trade-off between exploration and exploitation, often resulting in stable and effective learning outcomes.
+                </p>
+                <div class="policy-links">
+                    <a class="policy-link" href="../output/analysis/sarsa/decay/decay/learning_curve.html" target="_blank" title="Learning Curve">
+                        <svg viewBox="0 0 24 24"><path d="M3 17v2h18v-2H3zm2-2h2v-5H5v5zm4 0h2V7h-2v8zm4 0h2v-3h-2v3zm4 0h2v-8h-2v8z"/></svg>
+                        Curve
+                    </a>
+                    <a class="policy-link" href="../output/analysis/sarsa/decay/decay/returns_histogram.png" target="_blank" title="Returns Histogram">
+                        <svg viewBox="0 0 24 24"><path d="M3 17h2v-7H3v7zm4 0h2v-3H7v3zm4 0h2v-10h-2v10zm4 0h2v-5h-2v5zm4 0h2v-2h-2v2z"/></svg>
+                        Histogram
+                    </a>
+                    <a class="policy-link" href="../output/analysis/sarsa/decay/decay/qtable_heatmap.html" target="_blank" title="Q-table Heatmap">
+                        <svg viewBox="0 0 24 24"><path d="M3 5v14h18V5H3zm16 2v2h-6V7h6zm0 4v2h-6v-2h6zm0 4v2h-6v-2h6zm-8-8v2H5V7h6zm0 4v2H5v-2h6zm0 4v2H5v-2h6z"/></svg>
+                        Q-table
+                    </a>
+                    <a class="policy-link" href="../output/analysis/sarsa/decay/decay/policy_barplot.html" target="_blank" title="Learned Policy">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+                        Policy
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="qlearning" class="policy-section">
+        <h2>Q-Learning</h2>
+        <p>
+            <strong>Explanation:</strong> Below are the results for different Q-Learning exploration policies. Each card provides access to the learning curve, returns histogram, Q-table heatmap, and the learned policy. These visualizations help to analyze how each exploration strategy affects learning efficiency and policy quality.
+        </p>
+        <div class="policy-cards">
+            <div class="policy-card">
+                <div class="policy-title">Epsilon</div>
+                <p style="font-size:0.93em; margin-bottom:10px;">
+                    <strong>Analysis:</strong> Epsilon-greedy balances exploration and exploitation, often leading to stable learning and avoiding local optima, but may converge slower than more directed strategies.
+                </p>
+                <div class="policy-links">
+                    <a class="policy-link" href="../output/analysis/qlearning/epsilon/epsilon/learning_curve.html" target="_blank" title="Learning Curve">
+                        <svg viewBox="0 0 24 24"><path d="M3 17v2h18v-2H3zm2-2h2v-5H5v5zm4 0h2V7h-2v8zm4 0h2v-3h-2v3zm4 0h2v-8h-2v8z"/></svg>
+                        Curve
+                    </a>
+                    <a class="policy-link" href="../output/analysis/qlearning/epsilon/epsilon/returns_histogram.png" target="_blank" title="Returns Histogram">
+                        <svg viewBox="0 0 24 24"><path d="M3 17h2v-7H3v7zm4 0h2v-3H7v3zm4 0h2v-10h-2v10zm4 0h2v-5h-2v5zm4 0h2v-2h-2v2z"/></svg>
+                        Histogram
+                    </a>
+                    <a class="policy-link" href="../output/analysis/qlearning/epsilon/epsilon/qtable_heatmap.html" target="_blank" title="Q-table Heatmap">
+                        <svg viewBox="0 0 24 24"><path d="M3 5v14h18V5H3zm16 2v2h-6V7h6zm0 4v2h-6v-2h6zm0 4v2h-6v-2h6zm-8-8v2H5V7h6zm0 4v2H5v-2h6zm0 4v2H5v-2h6z"/></svg>
+                        Q-table
+                    </a>
+                    <a class="policy-link" href="../output/analysis/qlearning/epsilon/epsilon/policy_barplot.html" target="_blank" title="Learned Policy">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+                        Policy
+                    </a>
+                </div>
+            </div>
+            <div class="policy-card">
+                <div class="policy-title">Greedy</div>
+                <p style="font-size:0.93em; margin-bottom:10px;">
+                    <strong>Analysis:</strong> Greedy always selects the action with the highest estimated value. This can speed up convergence, but risks getting stuck in suboptimal policies due to lack of exploration.
+                </p>
+                <div class="policy-links">
+                    <a class="policy-link" href="../output/analysis/qlearning/greedy/greedy/learning_curve.html" target="_blank" title="Learning Curve">
+                        <svg viewBox="0 0 24 24"><path d="M3 17v2h18v-2H3zm2-2h2v-5H5v5zm4 0h2V7h-2v8zm4 0h2v-3h-2v3zm4 0h2v-8h-2v8z"/></svg>
+                        Curve
+                    </a>
+                    <a class="policy-link" href="../output/analysis/qlearning/greedy/greedy/returns_histogram.png" target="_blank" title="Returns Histogram">
+                        <svg viewBox="0 0 24 24"><path d="M3 17h2v-7H3v7zm4 0h2v-3H7v3zm4 0h2v-10h-2v10zm4 0h2v-5h-2v5zm4 0h2v-2h-2v2z"/></svg>
+                        Histogram
+                    </a>
+                    <a class="policy-link" href="../output/analysis/qlearning/greedy/greedy/qtable_heatmap.html" target="_blank" title="Q-table Heatmap">
+                        <svg viewBox="0 0 24 24"><path d="M3 5v14h18V5H3zm16 2v2h-6V7h6zm0 4v2h-6v-2h6zm0 4v2h-6v-2h6zm-8-8v2H5V7h6zm0 4v2H5v-2h6zm0 4v2H5v-2h6z"/></svg>
+                        Q-table
+                    </a>
+                    <a class="policy-link" href="../output/analysis/qlearning/greedy/greedy/policy_barplot.html" target="_blank" title="Learned Policy">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+                        Policy
+                    </a>
+                </div>
+            </div>
+            <div class="policy-card">
+                <div class="policy-title">Softmax</div>
+                <p style="font-size:0.93em; margin-bottom:10px;">
+                    <strong>Analysis:</strong> Softmax selects actions probabilistically based on their Q-values, promoting more nuanced exploration. This can help discover better policies but may require careful tuning of the temperature parameter.
+                </p>
+                <div class="policy-links">
+                    <a class="policy-link" href="../output/analysis/qlearning/softmax/softmax/learning_curve.html" target="_blank" title="Learning Curve">
+                        <svg viewBox="0 0 24 24"><path d="M3 17v2h18v-2H3zm2-2h2v-5H5v5zm4 0h2V7h-2v8zm4 0h2v-3h-2v3zm4 0h2v-8h-2v8z"/></svg>
+                        Curve
+                    </a>
+                    <a class="policy-link" href="../output/analysis/qlearning/softmax/softmax/returns_histogram.png" target="_blank" title="Returns Histogram">
+                        <svg viewBox="0 0 24 24"><path d="M3 17h2v-7H3v7zm4 0h2v-3H7v3zm4 0h2v-10h-2v10zm4 0h2v-5h-2v5zm4 0h2v-2h-2v2z"/></svg>
+                        Histogram
+                    </a>
+                    <a class="policy-link" href="../output/analysis/qlearning/softmax/softmax/qtable_heatmap.html" target="_blank" title="Q-table Heatmap">
+                        <svg viewBox="0 0 24 24"><path d="M3 5v14h18V5H3zm16 2v2h-6V7h6zm0 4v2h-6v-2h6zm0 4v2h-6v-2h6zm-8-8v2H5V7h6zm0 4v2H5v-2h6zm0 4v2H5v-2h6z"/></svg>
+                        Q-table
+                    </a>
+                    <a class="policy-link" href="../output/analysis/qlearning/softmax/softmax/policy_barplot.html" target="_blank" title="Learned Policy">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+                        Policy
+                    </a>
+                </div>
+            </div>
+            <div class="policy-card">
+                <div class="policy-title">Decay</div>
+                <p style="font-size:0.93em; margin-bottom:10px;">
+                    <strong>Analysis:</strong> Decaying epsilon-greedy starts with high exploration and gradually shifts to exploitation, often yielding robust learning and combining the benefits of initial exploration with eventual policy refinement.
+                </p>
+                <div class="policy-links">
+                    <a class="policy-link" href="../output/analysis/qlearning/decay/decay/learning_curve.html" target="_blank" title="Learning Curve">
+                        <svg viewBox="0 0 24 24"><path d="M3 17v2h18v-2H3zm2-2h2v-5H5v5zm4 0h2V7h-2v8zm4 0h2v-3h-2v3zm4 0h2v-8h-2v8z"/></svg>
+                        Curve
+                    </a>
+                    <a class="policy-link" href="../output/analysis/qlearning/decay/decay/returns_histogram.png" target="_blank" title="Returns Histogram">
+                        <svg viewBox="0 0 24 24"><path d="M3 17h2v-7H3v7zm4 0h2v-3H7v3zm4 0h2v-10h-2v10zm4 0h2v-5h-2v5zm4 0h2v-2h-2v2z"/></svg>
+                        Histogram
+                    </a>
+                    <a class="policy-link" href="../output/analysis/qlearning/decay/decay/qtable_heatmap.html" target="_blank" title="Q-table Heatmap">
+                        <svg viewBox="0 0 24 24"><path d="M3 5v14h18V5H3zm16 2v2h-6V7h6zm0 4v2h-6v-2h6zm0 4v2h-6v-2h6zm-8-8v2H5V7h6zm0 4v2H5v-2h6zm0 4v2H5v-2h6z"/></svg>
+                        Q-table
+                    </a>
+                    <a class="policy-link" href="../output/analysis/qlearning/decay/decay/policy_barplot.html" target="_blank" title="Learned Policy">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+                        Policy
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="random" class="policy-section">
+        <h2>Random (Baseline)</h2>
+        <p>
+            <strong>Explanation:</strong> The random agent selects actions uniformly at random, serving as a baseline for comparison. Its performance highlights the importance of learning and exploration strategies in RL.
+        </p>
+        <div class="policy-cards">
+            <div class="policy-card">
+                <div class="policy-title">Monte Carlo Random</div>
+                <div class="policy-links">
+                    <a class="policy-link" href="../output/analysis/montecarlo/random/random/learning_curve.html" target="_blank" title="Learning Curve">
+                        <svg viewBox="0 0 24 24"><path d="M3 17v2h18v-2H3zm2-2h2v-5H5v5zm4 0h2V7h-2v8zm4 0h2v-3h-2v3zm4 0h2v-8h-2v8z"/></svg>
+                        Curve
+                    </a>
+                    <a class="policy-link" href="../output/analysis/montecarlo/random/random/returns_histogram.png" target="_blank" title="Returns Histogram">
+                        <svg viewBox="0 0 24 24"><path d="M3 17h2v-7H3v7zm4 0h2v-3H7v3zm4 0h2v-10h-2v10zm4 0h2v-5h-2v5zm4 0h2v-2h-2v2z"/></svg>
+                        Histogram
+                    </a>
+                </div>
+            </div>
+            <div class="policy-card">
+                <div class="policy-title">SARSA Random</div>
+                <div class="policy-links">
+                    <a class="policy-link" href="../output/analysis/sarsa/random/random/learning_curve.html" target="_blank" title="Learning Curve">
+                        <svg viewBox="0 0 24 24"><path d="M3 17v2h18v-2H3zm2-2h2v-5H5v5zm4 0h2V7h-2v8zm4 0h2v-3h-2v3zm4 0h2v-8h-2v8z"/></svg>
+                        Curve
+                    </a>
+                    <a class="policy-link" href="../output/analysis/sarsa/random/random/returns_histogram.png" target="_blank" title="Returns Histogram">
+                        <svg viewBox="0 0 24 24"><path d="M3 17h2v-7H3v7zm4 0h2v-3H7v3zm4 0h2v-10h-2v10zm4 0h2v-5h-2v5zm4 0h2v-2h-2v2z"/></svg>
+                        Histogram
+                    </a>
+                </div>
+            </div>
+            <div class="policy-card">
+                <div class="policy-title">Q-Learning Random</div>
+                <div class="policy-links">
+                    <a class="policy-link" href="../output/analysis/qlearning/random/random/learning_curve.html" target="_blank" title="Learning Curve">
+                        <svg viewBox="0 0 24 24"><path d="M3 17v2h18v-2H3zm2-2h2v-5H5v5zm4 0h2V7h-2v8zm4 0h2v-3h-2v3zm4 0h2v-8h-2v8z"/></svg>
+                        Curve
+                    </a>
+                    <a class="policy-link" href="../output/analysis/qlearning/random/random/returns_histogram.png" target="_blank" title="Returns Histogram">
+                        <svg viewBox="0 0 24 24"><path d="M3 17h2v-7H3v7zm4 0h2v-3H7v3zm4 0h2v-10h-2v10zm4 0h2v-5h-2v5zm4 0h2v-2h-2v2z"/></svg>
+                        Histogram
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

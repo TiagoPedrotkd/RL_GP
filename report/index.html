@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>RL Comparative Reports - Main Index</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #f4f6fc 0%, #e3e6f3 100%);
+      margin: 0;
+      color: #222;
+    }
+    .container {
+      max-width: 700px;
+      margin: 60px auto;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px #bfc7e6;
+      padding: 40px 32px 32px 32px;
+      text-align: center;
+    }
+    h1 {
+      color: #1a237e;
+      font-size: 2.2em;
+      margin-bottom: 0.3em;
+    }
+    .desc {
+      color: #3949ab;
+      font-size: 1.15em;
+      margin-bottom: 2em;
+    }
+    .report-links {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      align-items: center;
+      margin-top: 30px;
+    }
+    .report-card {
+      background: #f8fafc;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(40,53,147,0.07);
+      padding: 28px 36px;
+      min-width: 220px;
+      max-width: 350px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: box-shadow 0.2s, transform 0.2s;
+      text-decoration: none;
+      color: #283593;
+      font-size: 1.15em;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .report-card:hover {
+      box-shadow: 0 6px 24px rgba(40,53,147,0.18);
+      transform: translateY(-4px) scale(1.03);
+      color: #1a237e;
+    }
+    .report-title {
+      font-size: 1.25em;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #283593;
+      z-index: 2;
+      position: relative;
+    }
+    .report-desc {
+      font-size: 1em;
+      color: #444;
+      margin-bottom: 0;
+      z-index: 2;
+      position: relative;
+    }
+    .report-card.blackjack::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; width: 100%; height: 100%;
+      background: url('./figures/5843.jpg') center/cover no-repeat;
+      opacity: 0.3;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .report-card.pendulum::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; width: 100%; height: 100%;
+      background: url('./figures/maxresdefault.jpg') center/cover no-repeat;
+      opacity: 0.3;
+      z-index: 1;
+      pointer-events: none;
+    }
+    @media (max-width: 700px) {
+      .container { padding: 12px 2vw; }
+      .report-card { min-width: 0; max-width: 98vw; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>RL Comparative Reports</h1>
+    <div class="desc">
+      Access the available Reinforcement Learning comparative reports below.<br>
+      Each report provides interactive analysis and visualizations for different agents and environments.
+    </div>
+    <div class="report-links">
+      <a class="report-card blackjack" href="./report_blackjack.html">
+        <div class="report-title">Blackjack RL Report</div>
+        <div class="report-desc">Monte Carlo, SARSA, Q-Learning and Random agents on the Blackjack environment.</div>
+      </a>
+      <a class="report-card pendulum" href="./report_pendulum.html">
+        <div class="report-title">Pendulum RL Report</div>
+        <div class="report-desc">Q-Learning and SARSA agents on the Pendulum environment with multiple policies.</div>
+      </a>
+    </div>
+  </div>
+</body>
+</html>
