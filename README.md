@@ -110,7 +110,7 @@ python -m src.training.train_pendulum
 
 ## 📘 Report
 
-A detailed description of the methodology, evaluation metrics, challenges, and results is available in [`report/report.html`](./report/report.html) and [`report.pdf`](./report.pdf).
+A detailed description of the methodology, evaluation metrics, challenges, and results is available in [`report/report.html`](./report/index.html) and [`report.pdf`](./RL_Project.pdf).
 
 ---
 
